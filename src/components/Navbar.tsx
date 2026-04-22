@@ -43,11 +43,13 @@ export function Navbar({ services = [] }: NavbarProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close mobile menu on navigation
-  useEffect(() => {
+  // Close mobile menu on navigation (render-phase state reset on pathname change)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
     setMobileServicesOpen(false);
-  }, [pathname]);
+  }
 
   const isServicesActive = pathname.startsWith('/services');
 
