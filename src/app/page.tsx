@@ -216,7 +216,7 @@ export default async function Home() {
                 </div>
                 <h4 className="text-xs text-text-muted uppercase">{c.client}</h4>
                 <h3 className="text-xl font-bold text-primary mb-2">{c.title}</h3>
-                <p className="text-text-muted italic">"{c.result}"</p>
+                <p className="text-text-muted italic">&ldquo;{c.result}&rdquo;</p>
               </div>
             </ScaleIn>
           ))}
@@ -246,7 +246,7 @@ export default async function Home() {
             <ScaleIn key={t._id}>
               <HoverCard className="bg-white p-10 rounded-card border border-border">
                 <p className="text-lg text-text-muted mb-8 italic">
-                  "{t.content}"
+                  &ldquo;{t.content}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-4">
