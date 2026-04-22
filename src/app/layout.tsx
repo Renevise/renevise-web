@@ -5,6 +5,10 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/seo";
+import { client } from "@/lib/sanity";
+import groq from "groq";
+
+const navServicesQuery = groq`*[_type == "service"]{ title, slug } | order(title asc)`;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,17 +87,19 @@ const organizationSchema = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const navServices = await client.fetch(navServicesQuery);
+
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
         <JsonLd data={organizationSchema} />
         <div className="flex flex-col min-h-screen">
-          <Navbar />
+          <Navbar services={navServices} />
           <main className="flex-grow">{children}</main>
           <Footer />
         </div>

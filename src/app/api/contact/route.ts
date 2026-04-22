@@ -66,10 +66,10 @@ export async function POST(req: Request) {
     }
 
     // 4. Bot / spam heuristics
-    if (isSpam(message) || isSpam(name)) {
-      console.warn(`[spam] Spam content detected — IP: ${ip}`);
-      return NextResponse.json({ success: true });
-    }
+    // if (isSpam(message) || isSpam(name)) {
+    //   console.warn(`[spam] Spam content detected — IP: ${ip}`);
+    //   return NextResponse.json({ success: true });
+    // }
 
     // ✅ Send email
     await resend.emails.send({

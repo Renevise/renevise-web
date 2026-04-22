@@ -16,6 +16,7 @@ import { buildMetadata, siteConfig } from "@/lib/seo";
 const query = groq`*[_type == "service"]{
   _id,
   title,
+  slug,
   description,
   problemsSolved,
   outcomes,
@@ -145,10 +146,10 @@ export default async function Services() {
 
                 {/* CTA */}
                 <Link
-                  href="/contact"
+                  href={`/services/${service.slug?.current}`}
                   className="mt-12 inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
                 >
-                  Project Discovery
+                  Explore Service
                   <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </Link>
 
