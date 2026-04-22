@@ -4,7 +4,7 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 import React from 'react';
 import Image from "next/image";
-import { ArrowRight, Globe, Smartphone, Cpu } from "lucide-react";
+import { ArrowRight, Globe, Smartphone, Sparkles, type LucideIcon } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -20,10 +20,10 @@ import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
 
-const iconMap: Record<string, any> = {
-  Globe: Globe,
-  Smartphone: Smartphone,
-  Cpu: Cpu,
+const iconMap: Record<string, LucideIcon> = {
+  web: Globe,
+  mobile: Smartphone,
+  ai: Sparkles,
 };
 
 // QUERIES
@@ -40,7 +40,9 @@ const homeQuery = groq`*[_type == "home"][0]{
 const servicesQuery = groq`*[_type == "service"][0...3]{
   _id,
   title,
-  description
+  description,
+  icon,
+  "slug": slug.current,
 }`;
 
 const caseStudiesQuery = groq`*[_type == "caseStudy"][0...2]{
@@ -123,7 +125,15 @@ export default async function Home() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {services.map((service: any, idx: number) => {
-            const Icon = iconMap[service.title] || Globe;
+            const Icon = iconMap[service.icon] ?? Globe;
+
+            // if (!service.icon || !iconMap[service.icon]) {
+            //   console.warn(
+            //     `[services] Missing or unknown icon for "${service.title}" (value: ${JSON.stringify(
+            //       service.icon
+            //     )}). Falling back to Globe. Set a valid icon in Sanity Studio.`
+            //   );
+            // }
 
             return (
               <ScaleIn delay={idx * 0.1} key={service._id}>
@@ -142,7 +152,7 @@ export default async function Home() {
                   </p>
 
                   <Link
-                    href="/services"
+                    href={service.slug ? `/services/${service.slug}` : "/services"}
                     className="text-accent text-sm font-bold inline-flex items-center gap-2 group/link"
                   >
                     Learn More
@@ -270,21 +280,26 @@ export default async function Home() {
       </Section >
 
       {/* FINAL CTA */}
-      < Section className="pb-32" >
-        <div className="bg-primary text-white p-16 text-center rounded-card">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            {data?.ctaTitle}
-          </h2>
+      <Section className="bg-surface pb-32">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 text-center rounded-card shadow-2xl">
+          <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
-          <p className="text-white/70 mb-8 max-w-xl mx-auto">
-            {data?.ctaSubtitle}
-          </p>
+          <div className="relative">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              {data?.ctaTitle}
+            </h2>
 
-          <Link href="/contact" className="bg-accent px-8 py-3 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-            {data?.primaryCTA}
-          </Link>
+            <p className="text-white/70 mb-8 max-w-xl mx-auto">
+              {data?.ctaSubtitle}
+            </p>
+
+            <Link href="/contact" className="inline-block bg-accent px-8 py-3 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+              {data?.primaryCTA}
+            </Link>
+          </div>
         </div>
-      </Section >
+      </Section>
 
     </div >
   );

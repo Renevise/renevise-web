@@ -6,7 +6,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary text-white pt-20 pb-10 px-6">
+    <footer className="bg-[#0d1234] text-white pt-20 pb-10 px-6 border-t border-white/10">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-1 md:col-span-1">
@@ -37,10 +37,10 @@ export function Footer() {
           <div>
             <h4 className="font-bold mb-6 text-white uppercase text-xs tracking-widest">Services</h4>
             <ul className="space-y-4">
-              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">Web Development</Link></li>
-              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">Mobile App Development</Link></li>
-              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">AI Automation</Link></li>
-              <li><Link href="/services" className="text-white/60 hover:text-white transition-colors text-sm">Content Solutions</Link></li>
+              <li><Link href="/services/web-development/" className="text-white/60 hover:text-white transition-colors text-sm">Web Development</Link></li>
+              <li><Link href="/services/mobile-app-development/" className="text-white/60 hover:text-white transition-colors text-sm">Mobile App Development</Link></li>
+              <li><Link href="/services/ai-content-creation/" className="text-white/60 hover:text-white transition-colors text-sm">AI Content Creation</Link></li>
+  
             </ul>
           </div>
 

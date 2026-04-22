@@ -119,24 +119,30 @@ export default async function About() {
       </Section>
 
       {/* CONTACT */}
-      <Section dark className="text-center bg-primary">
-        <SectionTitle
-          dark
-          label="Connect"
-          title="Ready to transform?"
-          subtitle="Our consultants are ready to discuss your next strategic move."
-        />
-
+      <Section className="bg-surface pb-32">
         <FadeIn>
-          <a
-            href={`mailto:${data.email}`}
-            className="inline-flex items-center gap-3 text-2xl md:text-4xl font-bold text-white transition-all duration-300 hover:text-accent hover:scale-[1.03]"
-          >
-            <Mail className="w-8 h-8 md:w-10 md:h-10" />
-            {data.email}
-          </a>
-        </FadeIn>
+          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
+            <div className="relative">
+              <SectionTitle
+                dark
+                label="Connect"
+                title="Ready to transform?"
+                subtitle="Our consultants are ready to discuss your next strategic move."
+              />
+
+              <a
+                href={`mailto:${data.email}`}
+                className="inline-flex items-center gap-3 text-2xl md:text-4xl font-bold text-white transition-all duration-300 hover:text-accent hover:scale-[1.03]"
+              >
+                <Mail className="w-8 h-8 md:w-10 md:h-10" />
+                {data.email}
+              </a>
+            </div>
+          </div>
+        </FadeIn>
       </Section>
 
     </div>

@@ -267,22 +267,29 @@ export default async function CaseStudyDetail({
       ) : null}
 
       {/* CTA */}
-      <Section className="bg-primary text-white text-center">
+      <Section className="bg-surface pb-32">
         <FadeIn>
-          <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
-            Have a similar challenge?
-          </h2>
-          <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto font-light">
-            Let&apos;s talk about your goals and build something that delivers
-            real, measurable results.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-theme font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-          >
-            Start a Conversation
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative">
+              <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+                Have a similar challenge?
+              </h2>
+              <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto font-light">
+                Let&apos;s talk about your goals and build something that delivers
+                real, measurable results.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-theme font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+              >
+                Start a Conversation
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
         </FadeIn>
       </Section>
     </div>
