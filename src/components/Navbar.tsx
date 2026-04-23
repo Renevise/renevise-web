@@ -56,11 +56,11 @@ export function Navbar({ services = [] }: NavbarProps) {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-10 lg:px-12 2xl:px-16 h-[72px] flex items-center',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 h-[72px] flex items-center',
         scrolled ? 'bg-white shadow-sm border-b border-border' : 'bg-white/80 backdrop-blur-md'
       )}
     >
-      <div className="max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto w-full flex items-center justify-between">
+      <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto w-full flex items-center justify-between">
         <Link href="/" className="flex items-center gap-1">
           <span className="text-xl font-extrabold tracking-tighter text-primary uppercase">
             Renevise<span className="text-accent">.</span>

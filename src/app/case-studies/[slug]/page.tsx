@@ -133,7 +133,7 @@ export default async function CaseStudyDetail({
 
       {/* HERO */}
       <Section className="bg-surface border-b border-border">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 2xl:gap-28 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <FadeIn>
             {study.serviceTitle && (
               <Link
@@ -147,10 +147,10 @@ export default async function CaseStudyDetail({
                 {study.serviceTitle}
               </Link>
             )}
-            <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-4 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-4 leading-tight">
               {study.title}
             </h1>
-            <p className="text-lg 2xl:text-xl text-text-muted font-light">
+            <p className="text-lg text-text-muted font-light">
               Client:{" "}
               <span className="text-primary font-semibold">{study.client}</span>
             </p>

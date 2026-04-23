@@ -37,7 +37,7 @@ export default async function About() {
 
       {/* HERO */}
       <Section className="bg-surface">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 2xl:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* TEXT */}
           <FadeIn>
@@ -46,11 +46,11 @@ export default async function About() {
                 Our Identity
               </span>
 
-              <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-8 leading-tight">
+              <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-8">
                 {data.heading}
               </h1>
 
-              <p className="text-lg 2xl:text-xl text-text-muted leading-relaxed font-light max-w-2xl">
+              <p className="text-lg text-text-muted leading-relaxed font-light max-w-2xl">
                 {data.subtext}
               </p>
             </div>
@@ -91,7 +91,7 @@ export default async function About() {
 
       {/* VALUES */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 2xl:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {data.values?.map((item: any, i: number) => {
             const Icon = iconMap[i];
 

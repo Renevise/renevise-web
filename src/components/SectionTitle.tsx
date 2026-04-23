@@ -21,7 +21,7 @@ export function SectionTitle({
   return (
     <div
       className={cn(
-        "mb-12 max-w-3xl 2xl:max-w-4xl 2xl:mb-16",
+        "mb-12 max-w-3xl",
         align === "center" ? "mx-auto text-center" : "text-left"
       )}
     >
@@ -43,7 +43,7 @@ export function SectionTitle({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className={cn(
-          "text-3xl md:text-4xl 2xl:text-5xl font-bold tracking-tight mb-4",
+          "text-3xl md:text-4xl font-bold tracking-tight mb-4",
           dark ? "text-white" : "text-primary"
         )}
       >
@@ -56,7 +56,7 @@ export function SectionTitle({
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
           className={cn(
-            "text-base md:text-lg 2xl:text-xl opacity-80 leading-relaxed font-sans",
+            "text-base md:text-lg opacity-80 leading-relaxed font-sans",
             dark ? "text-white/70" : "text-text-muted"
           )}
         >

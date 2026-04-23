@@ -4,7 +4,7 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 import React from 'react';
 import Image from "next/image";
-import { ArrowRight, Globe, Smartphone, Sparkles, type LucideIcon } from "lucide-react";
+import { Globe, Smartphone, Sparkles, type LucideIcon } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -42,6 +42,7 @@ const servicesQuery = groq`*[_type == "service"][0...3]{
   title,
   description,
   icon,
+  image,
   "slug": slug.current,
 }`;
 
@@ -72,29 +73,29 @@ export default async function Home() {
     <div className="pt-[72px]">
 
       {/* HERO */}
-      <section className="relative min-h-[500px] 2xl:min-h-[640px] flex items-center px-6 md:px-10 lg:px-12 2xl:px-16 overflow-hidden bg-gradient-to-br from-[#121945] to-[#1e2b7a] text-white">
-        <div className="max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto w-full py-20 2xl:py-28">
+      <section className="relative min-h-[500px] flex items-center px-6 overflow-hidden bg-gradient-to-br from-[#121945] to-[#1e2b7a] text-white">
+        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto w-full py-20">
           <FadeIn>
-            <div className="max-w-2xl 2xl:max-w-3xl">
+            <div className="max-w-2xl">
 
               <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em] mb-6 block">
                 Transforming Enterprise Technology
               </span>
 
-              <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
                 {data?.heroTitle}
               </h1>
 
-              <p className="text-lg md:text-xl 2xl:text-2xl text-white/80 mb-10 max-w-3xl">
+              <p className="text-lg md:text-xl text-white/80 mb-10">
                 {data?.heroSubtitle}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact" className="bg-accent text-white px-8 py-3.5 rounded-theme font-bold">
+                <Link href="/contact" className="bg-accent text-white px-8 py-3.5 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                   {data?.primaryCTA}
                 </Link>
 
-                <Link href="/services" className="px-8 py-3.5 rounded-theme font-bold bg-white/10 border border-white/20">
+                <Link href="/services" className="px-8 py-3.5 rounded-theme font-bold bg-white/10 border border-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                   {data?.secondaryCTA}
                 </Link>
               </div>
@@ -105,8 +106,8 @@ export default async function Home() {
       </section>
 
       {/* STATS */}
-      <section className="bg-white border-b border-border py-6 px-6 md:px-10 lg:px-12 2xl:px-16">
-        <div className="max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto flex flex-wrap justify-between gap-6">
+      <section className="bg-white border-b border-border py-6 px-6">
+        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto flex flex-wrap justify-between gap-6">
           {data?.stats?.map((stat: any, i: number) => (
             <div key={i} className="text-xs font-bold uppercase tracking-widest text-text-muted">
               <span className="text-lg text-primary">{stat.value}</span> {stat.label}
@@ -123,47 +124,60 @@ export default async function Home() {
           subtitle="We build high-performance tools optimized for scalability and performance."
         />
 
-        <div className="grid md:grid-cols-3 gap-6 2xl:gap-8">
-          {services.map((service: any, idx: number) => {
-            const Icon = iconMap[service.icon] ?? Globe;
+        <FadeIn>
+          <div className="flex flex-col md:flex-row gap-6 md:min-h-[420px]">
+            {services.map((service: any, idx: number) => {
+              const Icon = iconMap[service.icon] ?? Globe;
+              const step = String(idx + 1).padStart(2, "0");
+              const imageUrl = service.image
+                ? urlFor(service.image).width(1200).quality(85).url()
+                : null;
 
-            // if (!service.icon || !iconMap[service.icon]) {
-            //   console.warn(
-            //     `[services] Missing or unknown icon for "${service.title}" (value: ${JSON.stringify(
-            //       service.icon
-            //     )}). Falling back to Globe. Set a valid icon in Sanity Studio.`
-            //   );
-            // }
+              return (
+                <Link
+                  key={service._id}
+                  href={service.slug ? `/services/${service.slug}` : "/services"}
+                  className="group relative flex-1 md:hover:flex-[2] min-h-[280px] md:min-h-0 overflow-hidden rounded-card bg-[#eef1f9] border border-border transition-all duration-500 ease-out"
+                >
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 66vw"
+                      className="object-cover opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
+                    />
+                  )}
 
-            return (
-              <ScaleIn delay={idx * 0.1} key={service._id}>
-                <HoverCard className="p-8 bg-white border border-border rounded-card hover:border-accent/30">
+                  <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/80 to-primary/95 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
 
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent">
-                    <Icon className="w-6 h-6 text-accent transition-colors duration-300 group-hover:text-white" />
+                  <div className="relative h-full flex flex-col justify-between p-8 md:p-10">
+                    <div className="flex items-start justify-between">
+                      <div className="w-10 h-10 rounded-theme bg-white md:group-hover:bg-white/10 flex items-center justify-center transition-colors duration-500">
+                        <Icon
+                          className="w-5 h-5 text-accent md:group-hover:text-white transition-colors duration-500"
+                          strokeWidth={1.75}
+                        />
+                      </div>
+                      <span className="text-xs font-semibold tracking-[0.2em] text-text-muted md:group-hover:text-white/70 transition-colors duration-500">
+                        {step}
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-bold text-primary md:group-hover:text-white transition-colors duration-500 mb-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-text-muted md:text-white/80 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-500 md:max-w-md">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
-
-                  <h3 className="text-lg font-bold text-primary mb-2">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-text-muted text-sm mb-4">
-                    {service.description}
-                  </p>
-
-                  <Link
-                    href={service.slug ? `/services/${service.slug}` : "/services"}
-                    className="text-accent text-sm font-bold inline-flex items-center gap-2 group/link"
-                  >
-                    Learn More
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                  </Link>
-
-                </HoverCard>
-              </ScaleIn>
-            );
-          })}
-        </div>
+                </Link>
+              );
+            })}
+          </div>
+        </FadeIn>
 
         {/* <FadeIn>
           <div className="flex justify-center mt-12">
@@ -205,7 +219,7 @@ export default async function Home() {
               Case studies coming soon.
             </p>
           </FadeIn>
-        ) : <div className="grid md:grid-cols-2 gap-10 2xl:gap-12">
+        ) : <div className="grid md:grid-cols-2 gap-10">
           {caseStudies.map((c: any, idx: number) => (
             <ScaleIn key={c._id} delay={idx * 0.1}>
               <div className="group overflow-hidden flex flex-col">
@@ -246,7 +260,7 @@ export default async function Home() {
           subtitle="Reliable solutions for decision makers."
         />
 
-        <div className="grid md:grid-cols-2 gap-8 2xl:gap-10">
+        <div className="grid md:grid-cols-2 gap-8">
           {testimonials.map((t: any) => (
             <ScaleIn key={t._id}>
               <HoverCard className="bg-white p-10 rounded-card border border-border">
@@ -286,16 +300,16 @@ export default async function Home() {
 
       {/* FINAL CTA */}
       <Section className="bg-surface pb-32">
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 2xl:p-24 text-center rounded-card shadow-2xl">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 text-center rounded-card shadow-2xl">
           <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative">
-            <h2 className="text-3xl md:text-5xl 2xl:text-6xl font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
               {data?.ctaTitle}
             </h2>
 
-            <p className="text-white/70 2xl:text-lg mb-8 max-w-xl 2xl:max-w-2xl mx-auto">
+            <p className="text-white/70 mb-8 max-w-xl mx-auto">
               {data?.ctaSubtitle}
             </p>
 
