@@ -58,11 +58,11 @@ export default async function CaseStudies() {
       {/* HERO */}
       <Section className="bg-primary text-white">
         <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
+          <div className="text-center max-w-3xl 2xl:max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold mb-6">
               Our Impact
             </h1>
-            <p className="text-lg text-white/70">
+            <p className="text-lg 2xl:text-xl text-white/70">
               Real problems. Structured solutions. Measured results.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default async function CaseStudies() {
             </p>
           </FadeIn>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 2xl:gap-10">
             {caseStudies.map((study, idx) => (
               <FadeIn key={study._id} delay={idx * 0.08}>
                 <Link

@@ -32,7 +32,7 @@ export default async function Contact() {
     <div className="pt-[72px]">
 
       <Section className="bg-surface">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 2xl:gap-28 items-start">
 
           {/* LEFT */}
           <FadeIn>
@@ -42,11 +42,11 @@ export default async function Contact() {
                 Consultation
               </span>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-8">
+              <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-8 leading-tight">
                 {data.heading}
               </h1>
 
-              <p className="text-lg text-text-muted mb-12 leading-relaxed font-light">
+              <p className="text-lg 2xl:text-xl text-text-muted mb-12 leading-relaxed font-light max-w-2xl">
                 {data.subtext}
               </p>
 

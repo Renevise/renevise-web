@@ -37,7 +37,7 @@ export default async function About() {
 
       {/* HERO */}
       <Section className="bg-surface">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 2xl:gap-24 items-center">
 
           {/* TEXT */}
           <FadeIn>
@@ -46,11 +46,11 @@ export default async function About() {
                 Our Identity
               </span>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-8">
+              <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-8 leading-tight">
                 {data.heading}
               </h1>
 
-              <p className="text-lg text-text-muted leading-relaxed font-light">
+              <p className="text-lg 2xl:text-xl text-text-muted leading-relaxed font-light max-w-2xl">
                 {data.subtext}
               </p>
             </div>
@@ -91,7 +91,7 @@ export default async function About() {
 
       {/* VALUES */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 2xl:gap-10">
           {data.values?.map((item: any, i: number) => {
             const Icon = iconMap[i];
 
@@ -135,10 +135,13 @@ export default async function About() {
 
               <a
                 href={`mailto:${data.email}`}
-                className="inline-flex items-center gap-3 text-2xl md:text-4xl font-bold text-white transition-all duration-300 hover:text-accent hover:scale-[1.03]"
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 text-lg sm:text-2xl md:text-4xl font-bold text-white hover:text-accent transition-colors text-center break-words max-w-full px-4"
               >
-                <Mail className="w-8 h-8 md:w-10 md:h-10" />
-                {data.email}
+                <Mail className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex-shrink-0" />
+
+                <span className="break-all">
+                  {data.email}
+                </span>
               </a>
             </div>
           </div>

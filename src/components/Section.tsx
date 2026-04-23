@@ -22,12 +22,17 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "py-24 px-6 md:py-32",
+        "py-24 px-6 md:py-32 md:px-10 lg:px-12 2xl:px-16 2xl:py-40 3xl:py-48",
         dark ? "bg-primary text-white" : "bg-white text-slate-900 font-sans",
         className
       )}
     >
-      <div className={cn("max-w-7xl mx-auto", containerClassName)}>
+      <div
+        className={cn(
+          "max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto",
+          containerClassName
+        )}
+      >
         {children}
       </div>
     </section>

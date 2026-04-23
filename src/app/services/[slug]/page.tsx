@@ -138,20 +138,20 @@ export default async function ServiceDetail({
 
       {/* HERO */}
       <Section className="bg-surface border-b border-border">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 2xl:gap-28 items-center">
           <FadeIn>
             <span className="text-accent text-xs font-bold uppercase tracking-widest mb-6 block">
               Capability
             </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-4 leading-tight">
+            <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-4 leading-tight">
               {service.title}
             </h1>
             {service.tagline && (
-              <p className="text-xl text-accent font-semibold mb-6">
+              <p className="text-xl 2xl:text-2xl text-accent font-semibold mb-6">
                 {service.tagline}
               </p>
             )}
-            <p className="text-lg text-text-muted leading-relaxed font-light">
+            <p className="text-lg 2xl:text-xl text-text-muted leading-relaxed font-light max-w-2xl">
               {service.description}
             </p>
           </FadeIn>

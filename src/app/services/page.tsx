@@ -61,11 +61,11 @@ export default async function Services() {
       {/* HERO */}
       <Section className="bg-surface border-b border-border">
         <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-6">
+          <div className="text-center max-w-3xl 2xl:max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold text-primary mb-6">
               Capabilities
             </h1>
-            <p className="text-lg text-text-muted leading-relaxed font-light">
+            <p className="text-lg 2xl:text-xl text-text-muted leading-relaxed font-light">
               We provide outcome-driven technology services designed for high-performing organizations. No buzzwords, just business value.
             </p>
           </div>
@@ -80,7 +80,7 @@ export default async function Services() {
           <FadeIn key={service._id} delay={idx * 0.1}>
             <Section
               containerClassName={cn(
-                "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+                "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 2xl:gap-28 items-center"
               )}
             >
 
@@ -91,11 +91,11 @@ export default async function Services() {
                   Capability
                 </span>
 
-                <h2 className="text-3xl md:text-5xl font-bold text-primary mb-6">
+                <h2 className="text-3xl md:text-5xl 2xl:text-6xl font-bold text-primary mb-6 leading-tight">
                   {service.title}
                 </h2>
 
-                <p className="text-lg text-text-muted mb-10 leading-relaxed font-light">
+                <p className="text-lg 2xl:text-xl text-text-muted mb-10 leading-relaxed font-light max-w-2xl">
                   {service.description}
                 </p>
 

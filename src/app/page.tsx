@@ -72,20 +72,20 @@ export default async function Home() {
     <div className="pt-[72px]">
 
       {/* HERO */}
-      <section className="relative min-h-[500px] flex items-center px-6 overflow-hidden bg-gradient-to-br from-[#121945] to-[#1e2b7a] text-white">
-        <div className="max-w-7xl mx-auto w-full py-20">
+      <section className="relative min-h-[500px] 2xl:min-h-[640px] flex items-center px-6 md:px-10 lg:px-12 2xl:px-16 overflow-hidden bg-gradient-to-br from-[#121945] to-[#1e2b7a] text-white">
+        <div className="max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto w-full py-20 2xl:py-28">
           <FadeIn>
-            <div className="max-w-2xl">
+            <div className="max-w-2xl 2xl:max-w-3xl">
 
               <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em] mb-6 block">
                 Transforming Enterprise Technology
               </span>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
+              <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-extrabold mb-6 leading-tight">
                 {data?.heroTitle}
               </h1>
 
-              <p className="text-lg md:text-xl text-white/80 mb-10">
+              <p className="text-lg md:text-xl 2xl:text-2xl text-white/80 mb-10 max-w-3xl">
                 {data?.heroSubtitle}
               </p>
 
@@ -105,8 +105,8 @@ export default async function Home() {
       </section>
 
       {/* STATS */}
-      <section className="bg-white border-b border-border py-6 px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-6">
+      <section className="bg-white border-b border-border py-6 px-6 md:px-10 lg:px-12 2xl:px-16">
+        <div className="max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1600px] mx-auto flex flex-wrap justify-between gap-6">
           {data?.stats?.map((stat: any, i: number) => (
             <div key={i} className="text-xs font-bold uppercase tracking-widest text-text-muted">
               <span className="text-lg text-primary">{stat.value}</span> {stat.label}
@@ -123,7 +123,7 @@ export default async function Home() {
           subtitle="We build high-performance tools optimized for scalability and performance."
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 2xl:gap-8">
           {services.map((service: any, idx: number) => {
             const Icon = iconMap[service.icon] ?? Globe;
 
@@ -165,7 +165,7 @@ export default async function Home() {
           })}
         </div>
 
-        <FadeIn>
+        {/* <FadeIn>
           <div className="flex justify-center mt-12">
             <Link
               href="/services"
@@ -175,7 +175,7 @@ export default async function Home() {
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
-        </FadeIn>
+        </FadeIn> */}
       </Section>
 
       {/* Process Section */}
@@ -199,8 +199,13 @@ export default async function Home() {
           title="Measurable Impact"
           subtitle="Explore how we transform businesses."
         />
-
-        <div className="grid md:grid-cols-2 gap-10">
+        {caseStudies.length === 0 ? (
+          <FadeIn>
+            <p className="text-center text-text-muted">
+              Case studies coming soon.
+            </p>
+          </FadeIn>
+        ) : <div className="grid md:grid-cols-2 gap-10 2xl:gap-12">
           {caseStudies.map((c: any, idx: number) => (
             <ScaleIn key={c._id} delay={idx * 0.1}>
               <div className="group overflow-hidden flex flex-col">
@@ -220,9 +225,9 @@ export default async function Home() {
               </div>
             </ScaleIn>
           ))}
-        </div>
+        </div>};
 
-        <FadeIn>
+        {/* <FadeIn>
           <div className="flex justify-center mt-12">
             <Link
               href="/case-studies"
@@ -232,7 +237,7 @@ export default async function Home() {
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
-        </FadeIn>
+        </FadeIn> */}
       </Section>
 
       <Section className="bg-surface">
@@ -241,7 +246,7 @@ export default async function Home() {
           subtitle="Reliable solutions for decision makers."
         />
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 2xl:gap-10">
           {testimonials.map((t: any) => (
             <ScaleIn key={t._id}>
               <HoverCard className="bg-white p-10 rounded-card border border-border">
@@ -281,16 +286,16 @@ export default async function Home() {
 
       {/* FINAL CTA */}
       <Section className="bg-surface pb-32">
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 text-center rounded-card shadow-2xl">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 2xl:p-24 text-center rounded-card shadow-2xl">
           <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl 2xl:text-6xl font-bold mb-6">
               {data?.ctaTitle}
             </h2>
 
-            <p className="text-white/70 mb-8 max-w-xl mx-auto">
+            <p className="text-white/70 2xl:text-lg mb-8 max-w-xl 2xl:max-w-2xl mx-auto">
               {data?.ctaSubtitle}
             </p>
 
