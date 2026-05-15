@@ -20,7 +20,7 @@ export function Footer() {
               Building scalable digital solutions for modern businesses. Positioning your company as a leader in the digital landscape.
             </p>
             <div className="flex gap-4">
-              <a href="#"  className="p-2 bg-white/5  rounded-full hover:bg-white/10 transition-colors">
+              <a href="#" className="p-2 bg-white/5  rounded-full hover:bg-white/10 transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
               <a href="https://wa.me/+923043673951" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors">
@@ -40,7 +40,7 @@ export function Footer() {
               <li><Link href="/services/web-development/" className="text-white/60 hover:text-white transition-colors text-sm">Web Development</Link></li>
               <li><Link href="/services/mobile-app-development/" className="text-white/60 hover:text-white transition-colors text-sm">Mobile App Development</Link></li>
               <li><Link href="/services/ai-content-creation/" className="text-white/60 hover:text-white transition-colors text-sm">AI Content Creation</Link></li>
-  
+
             </ul>
           </div>
 
@@ -59,7 +59,13 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-white/60 text-sm">
                 <Mail className="w-4 h-4" />
-                renevise.ltd@gmail.com
+
+                <a
+                  href="mailto:renevise.ltd@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  renevise.ltd@gmail.com
+                </a>
               </li>
               <li className="text-white/60 text-sm leading-relaxed">
                 Hyderabad District<br />
