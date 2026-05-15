@@ -59,10 +59,10 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-white/60 text-sm">
                 <Mail className="w-4 h-4" />
-                it.renevise@gmail.com
+                renevise.ltd@gmail.com
               </li>
               <li className="text-white/60 text-sm leading-relaxed">
-                123 Tech Avenue, Hyderabad District<br />
+                Hyderabad District<br />
                 Sindh, Pakistan
               </li>
             </ul>
