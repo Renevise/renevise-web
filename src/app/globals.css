@@ -17,3 +17,73 @@
     @apply font-sans bg-surface text-text-main antialiased;
   }
 }
+
+/* Service tile micro-animations */
+@keyframes rv-orbit-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -3px, 0); }
+}
+
+@keyframes rv-orbit-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.rv-orbit-ring {
+  animation: rv-orbit-rotate 40s linear infinite;
+  transform-origin: center;
+}
+
+.rv-orbit-float-a { animation: rv-orbit-float 4s ease-in-out infinite; }
+.rv-orbit-float-b { animation: rv-orbit-float 5.2s ease-in-out infinite; animation-delay: -1.3s; }
+.rv-orbit-float-c { animation: rv-orbit-float 4.6s ease-in-out infinite; animation-delay: -2.6s; }
+
+@keyframes rv-phone-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -2px, 0); }
+}
+
+.rv-phone-float {
+  animation: rv-phone-float 6s ease-in-out infinite;
+}
+
+/* Web Development tile: seamless tag marquee.
+ * Track contains two identical sets side-by-side; translating by -50%
+ * snaps the second set into the first set's origin for a seamless loop. */
+@keyframes rv-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.rv-marquee-left,
+.rv-marquee-right {
+  animation-name: rv-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: var(--rv-marquee-duration, 40s);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.rv-marquee-right {
+  animation-direction: reverse;
+}
+
+@media (max-width: 1280px) {
+  .rv-marquee-left,
+  .rv-marquee-right {
+    animation-duration: calc(var(--rv-marquee-duration, 40s) * 1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-orbit-ring,
+  .rv-orbit-float-a,
+  .rv-orbit-float-b,
+  .rv-orbit-float-c,
+  .rv-phone-float,
+  .rv-marquee-left,
+  .rv-marquee-right {
+    animation: none !important;
+  }
+}

@@ -4,8 +4,8 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 import React from 'react';
 import Image from "next/image";
-import { Globe, Smartphone, Sparkles, type LucideIcon } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
+import ServicesGrid from "@/components/ServicesGrid";
 
 export const metadata: Metadata = buildMetadata({
   title: "Business Technology Consulting",
@@ -19,12 +19,6 @@ import ProcessSectionWrapper from "@/components/ProcessSectionWrapper";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
-
-const iconMap: Record<string, LucideIcon> = {
-  web: Globe,
-  mobile: Smartphone,
-  ai: Sparkles,
-};
 
 // QUERIES
 const homeQuery = groq`*[_type == "home"][0]{
@@ -43,6 +37,7 @@ const servicesQuery = groq`*[_type == "service"][0...3]{
   description,
   icon,
   image,
+  techTags,
   "slug": slug.current,
 }`;
 
@@ -125,58 +120,7 @@ export default async function Home() {
         />
 
         <FadeIn>
-          <div className="flex flex-col md:flex-row gap-6 md:min-h-[420px]">
-            {services.map((service: any, idx: number) => {
-              const Icon = iconMap[service.icon] ?? Globe;
-              const step = String(idx + 1).padStart(2, "0");
-              const imageUrl = service.image
-                ? urlFor(service.image).width(1200).quality(85).url()
-                : null;
-
-              return (
-                <Link
-                  key={service._id}
-                  href={service.slug ? `/services/${service.slug}` : "/services"}
-                  className="group relative flex-1 md:hover:flex-[2] min-h-[280px] md:min-h-0 overflow-hidden rounded-card bg-[#eef1f9] border border-border transition-all duration-500 ease-out"
-                >
-                  {imageUrl && (
-                    <Image
-                      src={imageUrl}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 66vw"
-                      className="object-cover opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
-                    />
-                  )}
-
-                  <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/80 to-primary/95 opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
-
-                  <div className="relative h-full flex flex-col justify-between p-8 md:p-10">
-                    <div className="flex items-start justify-between">
-                      <div className="w-10 h-10 rounded-theme bg-white md:group-hover:bg-white/10 flex items-center justify-center transition-colors duration-500">
-                        <Icon
-                          className="w-5 h-5 text-accent md:group-hover:text-white transition-colors duration-500"
-                          strokeWidth={1.75}
-                        />
-                      </div>
-                      <span className="text-xs font-semibold tracking-[0.2em] text-text-muted md:group-hover:text-white/70 transition-colors duration-500">
-                        {step}
-                      </span>
-                    </div>
-
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-primary md:group-hover:text-white transition-colors duration-500 mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-text-muted md:text-white/80 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-500 md:max-w-md">
-                        {service.description}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <ServicesGrid services={services} />
         </FadeIn>
 
         {/* <FadeIn>
