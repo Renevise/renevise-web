@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, MapPin } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -67,9 +67,13 @@ export function Footer() {
                   renevise.ltd@gmail.com
                 </a>
               </li>
-              <li className="text-white/60 text-sm leading-relaxed">
-                Hyderabad District<br />
-                Sindh, Pakistan
+              <li className="flex items-start gap-3 text-white/60 text-sm">
+                <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
+
+                <span className="leading-relaxed">
+                  Latifabad Unit 8, Hyderabad District<br />
+                  Sindh, Pakistan
+                </span>
               </li>
             </ul>
           </div>
