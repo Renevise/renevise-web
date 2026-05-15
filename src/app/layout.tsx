@@ -5,8 +5,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/seo";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import groq from "groq";
+import type { NavService } from "@/types";
+
+export const revalidate = 60;
 
 const navServicesQuery = groq`*[_type == "service"]{ title, slug } | order(title asc)`;
 
@@ -92,7 +95,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navServices = await client.fetch(navServicesQuery);
+  const navServices = await sanityFetch<NavService[]>(navServicesQuery, {}, { tags: ["service"] });
 
   return (
     <html lang="en" className={inter.variable}>

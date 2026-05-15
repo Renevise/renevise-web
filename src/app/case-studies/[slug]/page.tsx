@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
@@ -80,7 +82,7 @@ const portableTextComponents = {
 };
 
 export async function generateStaticParams() {
-  const slugs: { slug: string }[] = await client.fetch(allSlugsQuery);
+  const slugs = await sanityFetch<{ slug: string }[]>(allSlugsQuery, {}, { tags: ["caseStudy"] });
   return slugs.map((s) => ({ slug: s.slug }));
 }
 
@@ -90,7 +92,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const study: CaseStudy | null = await client.fetch(caseStudyQuery, { slug });
+  const study = await sanityFetch<CaseStudy | null>(caseStudyQuery, { slug }, { tags: ["caseStudy"] });
   if (!study) return {};
 
   return buildMetadata({
@@ -109,7 +111,7 @@ export default async function CaseStudyDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study: CaseStudy | null = await client.fetch(caseStudyQuery, { slug });
+  const study = await sanityFetch<CaseStudy | null>(caseStudyQuery, { slug }, { tags: ["caseStudy"] });
 
   if (!study) notFound();
 

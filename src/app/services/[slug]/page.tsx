@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
@@ -83,7 +85,7 @@ const portableTextComponents = {
 };
 
 export async function generateStaticParams() {
-  const slugs: { slug: string }[] = await client.fetch(allSlugsQuery);
+  const slugs = await sanityFetch<{ slug: string }[]>(allSlugsQuery, {}, { tags: ["service"] });
   return slugs.map((s) => ({ slug: s.slug }));
 }
 
@@ -93,7 +95,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service: Service | null = await client.fetch(serviceQuery, { slug });
+  const service = await sanityFetch<Service | null>(serviceQuery, { slug }, { tags: ["service"] });
   if (!service) return {};
 
   return buildMetadata({
@@ -110,13 +112,14 @@ export default async function ServiceDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service: Service | null = await client.fetch(serviceQuery, { slug });
+  const service = await sanityFetch<Service | null>(serviceQuery, { slug }, { tags: ["service"] });
 
   if (!service) notFound();
 
-  const relatedStudies: CaseStudy[] = await client.fetch(
+  const relatedStudies = await sanityFetch<CaseStudy[]>(
     relatedCaseStudiesQuery,
-    { serviceId: service._id }
+    { serviceId: service._id },
+    { tags: ["caseStudy"] }
   );
 
   const serviceSchema = {

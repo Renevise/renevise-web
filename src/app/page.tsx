@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import React from 'react';
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
@@ -59,10 +61,12 @@ const testimonialsQuery = groq`*[_type == "testimonial"][0...2]{
 }`;
 
 export default async function Home() {
-  const data = await client.fetch(homeQuery);
-  const services = await client.fetch(servicesQuery);
-  const caseStudies = await client.fetch(caseStudiesQuery);
-  const testimonials = await client.fetch(testimonialsQuery);
+  const [data, services, caseStudies, testimonials] = await Promise.all([
+    sanityFetch<any>(homeQuery, {}, { tags: ["home"] }),
+    sanityFetch<any[]>(servicesQuery, {}, { tags: ["service"] }),
+    sanityFetch<any[]>(caseStudiesQuery, {}, { tags: ["caseStudy"] }),
+    sanityFetch<any[]>(testimonialsQuery, {}, { tags: ["testimonial"] }),
+  ]);
 
   return (
     <div className="pt-[72px]">

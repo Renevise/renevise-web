@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 
@@ -30,7 +32,7 @@ const query = groq`*[_type == "about"][0]{
 const iconMap = [Target, ShieldCheck, Users];
 
 export default async function About() {
-  const data = await client.fetch(query);
+  const data = await sanityFetch<any>(query, {}, { tags: ["about"] });
 
   return (
     <div className="pt-[72px]">

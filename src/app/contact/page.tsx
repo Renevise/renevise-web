@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import groq from "groq";
+
+export const revalidate = 60;
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -26,7 +28,7 @@ const query = groq`*[_type == "contact"][0]{
 }`;
 
 export default async function Contact() {
-  const data = await client.fetch(query);
+  const data = await sanityFetch<any>(query, {}, { tags: ["contact"] });
 
   return (
     <div className="pt-[72px]">

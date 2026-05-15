@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import Image from "next/image";
 import { Section } from "@/components/Section";
 import { CheckCircle2, ArrowRight } from "lucide-react";
@@ -31,7 +33,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function Services() {
-  const services = await client.fetch(query);
+  const services = await sanityFetch<any[]>(query, {}, { tags: ["service"] });
 
   const serviceSchema = {
     "@context": "https://schema.org",

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { client } from "@/lib/sanity";
+import { sanityFetch } from "@/lib/sanity";
 import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
+
+export const revalidate = 60;
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/Section";
@@ -29,7 +31,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function CaseStudies() {
-  const caseStudies: CaseStudy[] = await client.fetch(query);
+  const caseStudies = await sanityFetch<CaseStudy[]>(query, {}, { tags: ["caseStudy"] });
 
   const caseStudySchema = {
     "@context": "https://schema.org",
