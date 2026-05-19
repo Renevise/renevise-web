@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "next-sanity";
 
 export interface CaseStudy {
   _id: string;
@@ -20,6 +21,16 @@ export interface ProcessStep {
   description: string;
 }
 
+export interface ServiceCapability {
+  title: string;
+  description?: string;
+}
+
+export interface TechnologyCategory {
+  title: string;
+  technologies: string[];
+}
+
 export interface Service {
   _id: string;
   title: string;
@@ -29,7 +40,14 @@ export interface Service {
   problemsSolved?: string[];
   outcomes?: string[];
   image?: any;
-  details?: any[];
+  details?: PortableTextBlock[];
+
+  // New service-detail content
+  overviewHeading?: string;
+  serviceOverview?: PortableTextBlock[];
+  capabilities?: ServiceCapability[];
+  technologyCategories?: TechnologyCategory[];
+
   seo?: {
     metaTitle?: string;
     metaDescription?: string;

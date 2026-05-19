@@ -25,7 +25,13 @@ export default function ContactForm({ services }: { services: string[] }) {
       return setError("Please enter a valid name.");
     }
 
-    if (!email || !email.includes("@")) {
+    // if (!email || !email.includes("@")) {
+    //   return setError("Please enter a valid email address.");
+    // }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailRegex.test(email)) {
       return setError("Please enter a valid email address.");
     }
 
@@ -79,7 +85,7 @@ export default function ContactForm({ services }: { services: string[] }) {
             onClick={() => setSubmitted(false)}
             className="text-accent font-bold hover:underline"
           >
-            Send another message 
+            Send another message
           </button>
         </motion.div>
       ) : (

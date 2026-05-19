@@ -24,7 +24,7 @@ export async function sanityFetch<T = unknown>(
 
   return client.fetch<T>(query, params, {
     next: {
-      revalidate: tags && tags.length > 0 ? false : revalidate,
+      revalidate,
       tags,
     },
   });

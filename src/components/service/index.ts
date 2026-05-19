@@ -1,0 +1,10 @@
+export { ServiceHero } from "./ServiceHero";
+export { ServiceOverview } from "./ServiceOverview";
+export { TrustSection } from "./TrustSection";
+export { WhyChooseSection } from "./WhyChooseSection";
+export { ProblemsOutcomes } from "./ProblemsOutcomes";
+export { TechStackSection } from "./TechStackSection";
+export { ProcessTimeline } from "./ProcessTimeline";
+export { RelatedCaseStudies } from "./RelatedCaseStudies";
+export { ServiceCTA } from "./ServiceCTA";
+export { CapabilityIllustration } from "./CapabilityIllustration";
