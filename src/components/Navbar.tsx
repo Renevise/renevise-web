@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -69,16 +70,33 @@ export function Navbar({ services = [] }: NavbarProps) {
         )}
       >
         <div className="flex h-[52px] items-center justify-between pl-3 pr-2 sm:pl-5 sm:pr-3">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="group flex items-center gap-2.5">
             <span
               className={cn(
-                'flex h-7 w-7 items-center justify-center rounded-lg text-sm font-extrabold shadow-sm',
+                'relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl transition-all duration-300',
                 onDark
-                  ? 'bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] text-white'
-                  : 'bg-accent text-white'
+                  ? 'bg-gradient-to-br from-[#1a2554]/85 via-[#0f1640]/90 to-[#080d2a]/95 ring-1 ring-inset ring-white/[0.09] shadow-[0_6px_18px_-4px_rgba(59,130,246,0.45),0_2px_6px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.08)]'
+                  : 'bg-gradient-to-br from-white to-[#eef3ff] ring-1 ring-inset ring-[#3b82f6]/15 shadow-[0_4px_14px_-3px_rgba(59,130,246,0.25),inset_0_1px_0_0_rgba(255,255,255,0.9)]'
               )}
             >
-              R
+              {/* Subtle radial highlight */}
+              <span
+                aria-hidden
+                className={cn(
+                  'pointer-events-none absolute inset-0 rounded-xl opacity-70',
+                  onDark
+                    ? 'bg-[radial-gradient(circle_at_30%_20%,rgba(96,165,250,0.18),transparent_60%)]'
+                    : 'bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12),transparent_65%)]'
+                )}
+              />
+              <Image
+                src="/logos/logo.png"
+                alt="Renevise"
+                width={48}
+                height={48}
+                priority
+                className="relative h-[22px] w-[22px] object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
+              />
             </span>
             <span
               className={cn(
