@@ -90,12 +90,18 @@ export function Navbar({ services = [] }: NavbarProps) {
                 )}
               />
               <Image
-                src="/logos/logo.png"
+                key={onDark ? 'dark' : 'light'}
+                src={onDark ? '/logos/logo.png' : '/logos/logo-2.png'}
                 alt="Renevise"
                 width={48}
                 height={48}
                 priority
-                className="relative h-[22px] w-[22px] object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
+                className={cn(
+                  'relative h-[22px] w-[22px] object-contain transition-opacity duration-300',
+                  onDark
+                    ? 'drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]'
+                    : 'drop-shadow-[0_1px_2px_rgba(59,130,246,0.15)]'
+                )}
               />
             </span>
             <span

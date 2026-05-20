@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Linkedin, Github, MapPin } from 'lucide-react';
 
 export function Footer() {
@@ -10,12 +11,26 @@ export function Footer() {
       <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-white/10 rounded flex items-center justify-center">
-                <span className="text-white font-bold">R</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight text-white">Renevise</span>
-            </div>
+            <Link href="/" className="group inline-flex items-center gap-3 mb-6">
+              <span
+                className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2554]/85 via-[#0f1640]/90 to-[#080d2a]/95 ring-1 ring-inset ring-white/[0.09] shadow-[0_6px_18px_-4px_rgba(59,130,246,0.45),0_2px_6px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all duration-300 group-hover:shadow-[0_8px_24px_-4px_rgba(59,130,246,0.55),0_2px_6px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_30%_20%,rgba(96,165,250,0.18),transparent_60%)] opacity-70"
+                />
+                <Image
+                  src="/logos/logo.png"
+                  alt="Renevise"
+                  width={48}
+                  height={48}
+                  className="relative h-[24px] w-[24px] object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
+                />
+              </span>
+              <span className="text-xl font-extrabold uppercase tracking-tighter text-white leading-none">
+                Renevise<span className="text-accent">.</span>
+              </span>
+            </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-8">
               Building scalable digital solutions for modern businesses. Positioning your company as a leader in the digital landscape.
             </p>
