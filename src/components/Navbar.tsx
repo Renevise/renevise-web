@@ -110,7 +110,7 @@ export function Navbar({ services = [] }: NavbarProps) {
                 onDark ? 'text-white' : 'text-primary'
               )}
             >
-              Renevise<span className="text-accent">.</span>
+              Renevise
             </span>
           </Link>
 

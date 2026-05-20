@@ -28,7 +28,7 @@ export function Footer() {
                 />
               </span>
               <span className="text-xl font-extrabold uppercase tracking-tighter text-white leading-none">
-                Renevise<span className="text-accent">.</span>
+                Renevise
               </span>
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-8">
