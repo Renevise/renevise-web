@@ -21,13 +21,18 @@ import ProcessSectionWrapper from "@/components/ProcessSectionWrapper";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
+import { HeroSection } from "@/components/hero/HeroSection";
+import { StatsBar } from "@/components/hero/StatsBar";
 
 // QUERIES
 const homeQuery = groq`*[_type == "home"][0]{
+  heroBadge,
   heroTitle,
+  heroTitleHighlight,
   heroSubtitle,
   primaryCTA,
   secondaryCTA,
+  socialProof,
   stats,
   ctaTitle,
   ctaSubtitle
@@ -69,54 +74,20 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="pt-[72px]">
+    <div>
 
-      {/* HERO */}
-      <section className="relative min-h-[500px] flex items-center px-6 overflow-hidden bg-gradient-to-br from-[#121945] to-[#1e2b7a] text-white">
-        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto w-full py-20">
-          <FadeIn>
-            <div className="max-w-2xl">
+      {/* HERO — extends to the very top so the navbar floats on the dark gradient */}
+      <HeroSection data={data} />
 
-              <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em] mb-6 block">
-                Transforming Enterprise Technology
-              </span>
-
-              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
-                {data?.heroTitle}
-              </h1>
-
-              <p className="text-lg md:text-xl text-white/80 mb-10">
-                {data?.heroSubtitle}
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact" className="bg-accent text-white px-8 py-3.5 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                  {data?.primaryCTA}
-                </Link>
-
-                <Link href="/services" className="px-8 py-3.5 rounded-theme font-bold bg-white/10 border border-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                  {data?.secondaryCTA}
-                </Link>
-              </div>
-
-            </div>
-          </FadeIn>
+      {/* STATS — floats across the hero/services boundary (md+); stacks naturally on mobile */}
+      <div className="relative z-20 px-5 sm:px-6 md:-mt-[88px] lg:-mt-[96px]">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1400px]">
+          <StatsBar stats={data?.stats} />
         </div>
-      </section>
-
-      {/* STATS */}
-      <section className="bg-white border-b border-border py-6 px-6">
-        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto flex flex-wrap justify-between gap-6">
-          {data?.stats?.map((stat: any, i: number) => (
-            <div key={i} className="text-xs font-bold uppercase tracking-widest text-text-muted">
-              <span className="text-lg text-primary">{stat.value}</span> {stat.label}
-            </div>
-          ))}
-        </div>
-      </section>
+      </div>
 
       {/* SERVICES */}
-      <Section className="bg-surface">
+      <Section className="bg-surface pt-16 md:pt-24">
         <SectionTitle
           label="Expertise"
           title="Industry-Leading Expertise"
