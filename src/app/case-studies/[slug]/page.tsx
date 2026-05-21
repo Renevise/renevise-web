@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
 import { Section } from "@/components/Section";
+import { SectionBackground } from "@/components/SectionBackground";
 import { ArrowRight, Settings, BarChart3, TrendingUp } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
@@ -271,9 +272,8 @@ export default async function CaseStudyDetail({
       {/* CTA */}
       <Section className="bg-surface pb-32">
         <FadeIn>
-          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative isolate overflow-hidden bg-[#06092a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
+            <SectionBackground />
 
             <div className="relative">
               <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
@@ -285,10 +285,14 @@ export default async function CaseStudyDetail({
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-theme font-bold text-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-10 py-4 text-lg font-bold text-white shadow-[0_12px_36px_-12px_rgba(59,130,246,0.7)] transition-all duration-300 hover:shadow-[0_22px_50px_-12px_rgba(59,130,246,0.85)]"
               >
-                Start a Conversation
-                <ArrowRight className="w-5 h-5" />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                />
+                <span className="relative">Start a Conversation</span>
+                <ArrowRight className="relative w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>

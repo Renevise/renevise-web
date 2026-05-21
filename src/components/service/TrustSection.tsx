@@ -7,6 +7,7 @@ import {
   LineChart,
 } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 
 const ITEMS = [
   {
@@ -49,17 +50,19 @@ const ITEMS = [
 
 export function TrustSection() {
   return (
-    <section className="bg-white border-b border-border">
-      <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-20 md:py-28">
+    <section className="relative isolate overflow-hidden bg-[#06092a] text-white">
+      <HeroBackground />
+
+      <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-20 md:py-28">
         <FadeIn>
           <div className="max-w-2xl mb-12 md:mb-16">
-            <span className="text-accent text-[11px] font-bold uppercase tracking-[0.2em] mb-3 block">
+            <span className="text-blue-400 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 block">
               Why Clients Trust Us
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-[2.4rem] font-extrabold text-primary leading-[1.1] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-[2.4rem] font-extrabold text-white leading-[1.1] tracking-tight mb-4">
               An engineering partner built for the long term.
             </h2>
-            <p className="text-base md:text-lg text-text-muted leading-relaxed">
+            <p className="text-base md:text-lg text-white/70 leading-relaxed">
               We earn trust the way our clients do — through quality, clarity,
               and the discipline to ship what we promised.
             </p>
@@ -71,16 +74,37 @@ export function TrustSection() {
             const Icon = item.icon;
             return (
               <FadeIn key={item.title} delay={Math.min(idx * 0.06, 0.36)}>
-                <div className="group h-full p-7 md:p-8 rounded-card bg-surface border border-border transition-all duration-300 hover:bg-white hover:border-accent/40 hover:shadow-[0_8px_30px_rgba(18,25,69,0.06)] hover:-translate-y-0.5">
-                  <div className="w-11 h-11 rounded-theme bg-accent/10 text-accent flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-                    <Icon className="w-5 h-5" />
+                <div
+                  className="group relative h-full overflow-hidden rounded-2xl border border-white/[0.08] p-7 md:p-8 backdrop-blur-2xl transition-[transform,box-shadow,border-color] duration-300 hover:border-white/[0.14] hover:-translate-y-0.5"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(140deg, rgba(24,33,96,0.55) 0%, rgba(15,21,56,0.65) 55%, rgba(8,12,40,0.75) 100%)",
+                    boxShadow:
+                      "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.22), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(255,255,255,0.03)",
+                  }}
+                >
+                  {/* upper-right brand glow lobe */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -top-20 -right-14 h-44 w-44 rounded-full bg-[#3b82f6]/22 blur-[70px] opacity-90"
+                  />
+                  {/* hairline top highlight */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  />
+
+                  <div className="relative">
+                    <div className="w-11 h-11 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.10] to-white/[0.02] text-[#9bb7ff] flex items-center justify-center mb-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-6px_12px_-6px_rgba(59,130,246,0.5)] transition-colors duration-300 group-hover:text-white">
+                      <Icon className="w-5 h-5" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-3 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-[15px] text-white/65 leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold text-primary mb-3 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-[15px] text-text-muted leading-relaxed">
-                    {item.description}
-                  </p>
                 </div>
               </FadeIn>
             );

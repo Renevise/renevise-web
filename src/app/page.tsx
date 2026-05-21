@@ -23,6 +23,7 @@ import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { StatsBar } from "@/components/hero/StatsBar";
+import { SectionBackground } from "@/components/SectionBackground";
 
 // QUERIES
 const homeQuery = groq`*[_type == "home"][0]{
@@ -112,17 +113,17 @@ export default async function Home() {
       </Section>
 
       {/* Process Section */}
-      <Section className="bg-primary text-white overflow-hidden relative">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-accent/5 rounded-l-full blur-[120px] pointer-events-none" />
-        <SectionTitle
-          dark
-          title="Our Structured Approach"
-          subtitle="Positioning reliability as the core of every partnership. Our repeatable process guarantees quality at scale."
-        />
-        <div className="relative z-10">
+      <section className="relative isolate overflow-hidden bg-[#06092a] text-white py-24 px-6 md:py-32">
+        <SectionBackground />
+        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto">
+          <SectionTitle
+            dark
+            title="Our Structured Approach"
+            subtitle="Positioning reliability as the core of every partnership. Our repeatable process guarantees quality at scale."
+          />
           <ProcessSectionWrapper />
         </div>
-      </Section>
+      </section>
 
 
 
@@ -219,9 +220,8 @@ export default async function Home() {
 
       {/* FINAL CTA */}
       <Section className="bg-surface pb-32">
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white p-12 md:p-20 text-center rounded-card shadow-2xl">
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative isolate overflow-hidden bg-[#06092a] text-white p-12 md:p-20 text-center rounded-card shadow-2xl">
+          <SectionBackground />
 
           <div className="relative">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">
@@ -232,8 +232,15 @@ export default async function Home() {
               {data?.ctaSubtitle}
             </p>
 
-            <Link href="/contact" className="inline-block bg-accent px-8 py-3 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-              {data?.primaryCTA}
+            <Link
+              href="/contact"
+              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-8 py-3 font-bold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
+            >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+              />
+              <span className="relative">{data?.primaryCTA}</span>
             </Link>
           </div>
         </div>

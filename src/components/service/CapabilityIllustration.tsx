@@ -16,11 +16,16 @@ export function CapabilityIllustration({ variant = "default", className }: Props
   return (
     <div
       className={cn(
-        "relative aspect-square w-full rounded-card overflow-hidden",
-        "bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_75%_80%,rgba(59,130,246,0.10),transparent_60%)]",
-        "border border-white/10",
+        "relative aspect-square w-full rounded-card overflow-hidden border border-[#1a2670]/45",
         className
       )}
+      style={{
+        backgroundColor: "#06092a",
+        backgroundImage:
+          "radial-gradient(circle at 30% 20%, rgba(59,130,246,0.22), transparent 55%), radial-gradient(circle at 75% 80%, rgba(122,162,255,0.14), transparent 60%)",
+        boxShadow:
+          "0 30px 60px -25px rgba(18,25,69,0.45), 0 18px 40px -22px rgba(59,130,246,0.22), inset 0 1px 0 rgba(255,255,255,0.06)",
+      }}
     >
       <Grid />
       {variant === "web" && <WebSvg />}

@@ -7,6 +7,7 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
+import { HeroBackgroundCard } from "@/components/HeroBackgroundCard";
 
 const ITEMS = [
   {
@@ -78,26 +79,22 @@ export function WhyChooseSection() {
             const isOffset = idx % 2 === 1;
             return (
               <FadeIn key={item.title} delay={Math.min(idx * 0.05, 0.3)}>
-                <div
-                  className={[
-                    "group relative h-full p-7 md:p-8 rounded-card border border-border bg-white transition-all duration-300",
-                    "hover:border-accent/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(18,25,69,0.07)]",
-                    isOffset ? "lg:translate-y-4" : "",
-                  ].join(" ")}
-                >
-                  <div className="absolute top-7 right-7 text-[11px] font-bold text-text-muted/50 tracking-widest">
-                    0{idx + 1}
+                <HeroBackgroundCard className={isOffset ? "lg:translate-y-4" : ""}>
+                  <div className="p-7 md:p-8">
+                    <div className="absolute top-7 right-7 text-[11px] font-bold text-white/40 tracking-widest">
+                      0{idx + 1}
+                    </div>
+                    <div className="w-11 h-11 rounded-theme bg-white/10 text-white flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-accent border border-white/15">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-3 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-[15px] text-white/70 leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <div className="w-11 h-11 rounded-theme bg-primary text-white flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-accent">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold text-primary mb-3 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-[15px] text-text-muted leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+                </HeroBackgroundCard>
               </FadeIn>
             );
           })}

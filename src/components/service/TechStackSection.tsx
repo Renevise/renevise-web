@@ -1,4 +1,5 @@
 import FadeIn from "@/components/animations/FadeIn";
+import { HeroBackgroundCard } from "@/components/HeroBackgroundCard";
 import type { TechnologyCategory } from "@/types";
 
 interface Props {
@@ -61,26 +62,28 @@ export function TechStackSection({ categories }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {categories.map((cat, idx) => (
             <FadeIn key={cat.title} delay={Math.min(idx * 0.06, 0.36)}>
-              <div className="group h-full rounded-card border border-border bg-white p-7 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_8px_30px_rgba(18,25,69,0.06)]">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="w-8 h-8 rounded-theme bg-accent/10 text-accent text-xs font-bold flex items-center justify-center">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-base md:text-lg font-bold text-primary uppercase tracking-wide">
-                    {cat.title}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {cat.technologies.map((t) => (
-                    <span
-                      key={t}
-                      className="px-3 py-1.5 bg-surface border border-border text-[12px] font-semibold text-text-muted rounded-theme transition-all duration-200 hover:bg-accent hover:text-white hover:border-accent"
-                    >
-                      {t}
+              <HeroBackgroundCard>
+                <div className="p-7">
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="w-8 h-8 rounded-theme bg-accent/15 text-[#7aa2ff] text-xs font-bold flex items-center justify-center border border-white/10">
+                      {String(idx + 1).padStart(2, "0")}
                     </span>
-                  ))}
+                    <h3 className="text-base md:text-lg font-bold text-white uppercase tracking-wide">
+                      {cat.title}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.technologies.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[12px] font-semibold text-white/80 rounded-theme transition-all duration-200 hover:bg-accent hover:text-white hover:border-accent backdrop-blur-sm"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </HeroBackgroundCard>
             </FadeIn>
           ))}
         </div>

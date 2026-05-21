@@ -1,4 +1,5 @@
 import FadeIn from "@/components/animations/FadeIn";
+import { SectionBackground } from "@/components/SectionBackground";
 
 interface Step {
   number: string;
@@ -195,11 +196,8 @@ export function ProcessTimeline({ variant = "default" }: Props) {
   const steps = STEPS[variant];
 
   return (
-    <section className="relative bg-primary text-white overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(59,130,246,0.18),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,0.10),transparent_55%)]"
-      />
+    <section className="relative isolate bg-[#06092a] text-white overflow-hidden">
+      <SectionBackground />
 
       <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-20 md:py-28">
         <FadeIn>

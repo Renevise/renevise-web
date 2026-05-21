@@ -7,7 +7,9 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
+import { SectionBackground } from './SectionBackground';
 import type { NavService } from '@/types';
+
 
 interface NavbarProps {
   services?: NavService[];
@@ -46,8 +48,14 @@ export function Navbar({ services = [] }: NavbarProps) {
   }
 
   const isServicesActive = pathname.startsWith('/services');
-  // Dark glass when on home page over the hero (top of page only).
-  const onDark = pathname === '/' && !scrolled;
+  // Dark glass when sitting over a dark hero (home, about, service detail),
+  // top of page only. The `/services/` prefix (with trailing slash) excludes
+  // the services index and only matches individual service detail routes.
+  const onDark =
+    (pathname === '/' ||
+      pathname === '/about' ||
+      pathname.startsWith('/services/')) &&
+    !scrolled;
 
   const linkBase = 'text-[13px] font-medium transition-colors';
   const linkIdle = onDark
@@ -156,12 +164,22 @@ export function Navbar({ services = [] }: NavbarProps) {
                     transition={{ duration: 0.15 }}
                     className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white shadow-xl"
                   >
+                  
                     <Link
                       href="/services"
                       onClick={() => setServicesOpen(false)}
-                      className="block border-b border-border px-4 py-3 text-sm font-semibold text-primary transition-colors hover:bg-surface"
+                      className="group relative isolate block overflow-hidden border-b border-white/10 bg-[#06092a] px-4 py-3 text-sm font-semibold text-white transition-shadow duration-300 hover:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3b82f6]/70"
                     >
-                      All Services
+                      <SectionBackground />
+                      <span className="relative z-10 flex items-center justify-between gap-2">
+                        <span>All Services</span>
+                        <span
+                          aria-hidden
+                          className="text-white/70 transition-transform duration-200 group-hover:translate-x-0.5"
+                        >
+                          →
+                        </span>
+                      </span>
                     </Link>
                     {services.map((s) => (
                       <Link
@@ -198,9 +216,13 @@ export function Navbar({ services = [] }: NavbarProps) {
 
             <Link
               href="/contact"
-              className="ml-1 flex items-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#2563eb] px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-[0_8px_22px_-8px_rgba(59,130,246,0.6)] transition-all hover:from-[#4f8ef7] hover:to-[#2f6dea] hover:shadow-[0_12px_28px_-8px_rgba(59,130,246,0.7)]"
+              className="group relative ml-1 inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-[0_8px_22px_-8px_rgba(59,130,246,0.6)] transition-all duration-300 hover:shadow-[0_14px_30px_-8px_rgba(59,130,246,0.8)]"
             >
-              Get a Quote
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+              />
+              <span className="relative">Get a Quote</span>
             </Link>
           </div>
 
@@ -335,9 +357,13 @@ export function Navbar({ services = [] }: NavbarProps) {
 
                 <Link
                   href="/contact"
-                  className="mt-1 rounded-xl bg-accent px-4 py-2.5 text-center text-sm font-semibold text-white shadow-sm"
+                  className="group relative mt-1 inline-flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-4 py-2.5 text-center text-sm font-semibold text-white shadow-[0_10px_28px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_16px_36px_-10px_rgba(59,130,246,0.8)]"
                 >
-                  Get a Quote
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                  />
+                  <span className="relative">Get a Quote</span>
                 </Link>
               </div>
             </motion.div>

@@ -45,17 +45,17 @@ export const servicePortableText: PortableTextComponents = {
 export const overviewPortableText: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
-      <h2 className="text-2xl md:text-3xl font-bold text-white mt-8 mb-4 leading-tight">
+      <h2 className="text-2xl md:text-3xl font-bold text-primary mt-8 mb-4 leading-tight">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl font-semibold text-white mt-6 mb-3 leading-snug">
+      <h3 className="text-xl font-semibold text-primary mt-6 mb-3 leading-snug">
         {children}
       </h3>
     ),
     normal: ({ children }) => (
-      <p className="text-white/70 text-base md:text-[17px] leading-relaxed mb-5">
+      <p className="text-text-muted text-base md:text-[17px] leading-relaxed mb-5">
         {children}
       </p>
     ),
@@ -65,8 +65,8 @@ export const overviewPortableText: PortableTextComponents = {
   },
   listItem: {
     bullet: ({ children }) => (
-      <li className="flex items-start gap-3 text-white/70 leading-relaxed list-none">
-        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-[0.65em] shrink-0" />
+      <li className="flex items-start gap-3 text-text-muted leading-relaxed list-none">
+        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-[0.65em] shrink-0" />
         <span>{children}</span>
       </li>
     ),

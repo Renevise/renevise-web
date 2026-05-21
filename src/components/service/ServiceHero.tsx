@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { urlFor } from "@/lib/sanityImage";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 
 interface ServiceHeroProps {
   title: string;
@@ -13,13 +14,6 @@ interface ServiceHeroProps {
   capabilityLabel?: string;
 }
 
-const TRUST_METRICS = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "12+", label: "Industries Served" },
-  { value: "98%", label: "Client Retention" },
-  { value: "24/7", label: "Priority Support" },
-];
-
 export function ServiceHero({
   title,
   tagline,
@@ -28,38 +22,38 @@ export function ServiceHero({
   capabilityLabel = "Capability",
 }: ServiceHeroProps) {
   return (
-    <section className="relative bg-surface border-b border-border">
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,rgba(59,130,246,0.08),transparent_55%)]"
-      />
+    <section className="relative isolate overflow-hidden bg-[#06092a] text-white">
+      <HeroBackground />
 
-      <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 pt-8 md:pt-12 lg:pt-14 pb-12 md:pb-16">
-        {/* 55 / 45 split on desktop — explicit fr ratio prevents column collapse */}
+      <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 pt-[100px] md:pt-[120px] pb-20 md:pb-28">
+        {/* 55 / 45 split on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-[11fr_9fr] gap-y-10 lg:gap-x-14 items-center">
           {/* LEFT — content */}
           <div>
             <FadeIn>
               <div className="max-w-[640px]">
-                <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-white border border-border">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-text-muted">
+                <div className="inline-flex items-center gap-2 mb-6 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7aa2ff]" />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
                     {capabilityLabel}
                   </span>
                 </div>
 
-                <h1 className="text-[clamp(2rem,3.4vw,3.25rem)] font-extrabold text-primary mb-4 leading-[1.08] tracking-tight">
+                <h1
+                  className="font-extrabold mb-4 leading-[1.05] tracking-[-0.015em] text-white"
+                  style={{ fontSize: "clamp(2rem, 1.4rem + 2.05vw, 3.25rem)" }}
+                >
                   {title}
                 </h1>
 
                 {tagline && (
-                  <p className="text-lg md:text-xl text-accent font-semibold mb-5 leading-snug">
+                  <p className="text-lg md:text-xl font-semibold mb-5 leading-snug bg-gradient-to-r from-[#3b82f6] to-[#7aa2ff] bg-clip-text text-transparent">
                     {tagline}
                   </p>
                 )}
 
                 {description && (
-                  <p className="text-base md:text-[17px] text-text-muted leading-relaxed font-light mb-8">
+                  <p className="text-base md:text-[17px] text-white/60 leading-relaxed font-light mb-8">
                     {description}
                   </p>
                 )}
@@ -67,15 +61,19 @@ export function ServiceHero({
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-accent text-white px-7 py-3.5 rounded-theme font-semibold text-[15px] transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
+                    className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
                   >
-                    Start Project
-                    <ArrowRight className="w-4 h-4" />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                    />
+                    <span className="relative">Start Project</span>
+                    <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                   </Link>
 
                   <Link
                     href="/case-studies"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-primary border border-border px-7 py-3.5 rounded-theme font-semibold text-[15px] transition-all duration-300 hover:border-accent hover:text-accent"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/[0.08] hover:border-white/25"
                   >
                     View Related Work
                     <ArrowUpRight className="w-4 h-4" />
@@ -89,7 +87,13 @@ export function ServiceHero({
           <div>
             {image ? (
               <ScaleIn>
-                <div className="relative aspect-[5/4] lg:aspect-[5/4] xl:aspect-[4/3] rounded-card overflow-hidden border border-border shadow-[0_20px_50px_-20px_rgba(18,25,69,0.25)]">
+                <div
+                  className="relative aspect-[5/4] lg:aspect-[5/4] xl:aspect-[4/3] overflow-hidden rounded-2xl border border-white/10"
+                  style={{
+                    boxShadow:
+                      "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
+                  }}
+                >
                   <Image
                     src={urlFor(image).width(1000).height(800).url()}
                     alt={title}
@@ -98,36 +102,29 @@ export function ServiceHero({
                     sizes="(max-width: 1024px) 100vw, 42vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent pointer-events-none" />
+                  {/* Subtle navy gradient overlay to fuse the image into the hero atmosphere */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none" />
+                  {/* Inner hairline highlight */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"
+                  />
                 </div>
               </ScaleIn>
             ) : (
-              <div className="aspect-[5/4] rounded-card bg-white border border-border" />
+              <div className="aspect-[5/4] rounded-2xl border border-white/10 bg-white/[0.03]" />
             )}
           </div>
         </div>
 
-        {/* TRUST METRICS */}
-        <FadeIn delay={0.15}>
-          <div className="mt-12 md:mt-14 grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-border bg-white rounded-card border border-border overflow-hidden">
-            {TRUST_METRICS.map((m, i) => (
-              <div
-                key={m.label}
-                className={`px-6 py-5 md:py-6 flex flex-col justify-center ${
-                  i % 2 === 1 ? "border-l border-border lg:border-l-0" : ""
-                }`}
-              >
-                <span className="text-2xl md:text-3xl font-extrabold text-primary leading-none tracking-tight">
-                  {m.value}
-                </span>
-                <span className="mt-2 text-[11px] md:text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
-                  {m.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
       </div>
+
+      {/* Bottom anchor — keeps the deep navy uniform to the section edge before the
+          light overview section creates the intentional contrast break. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#05071f]/60 to-[#04061a]"
+      />
     </section>
   );
 }

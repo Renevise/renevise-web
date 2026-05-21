@@ -14,10 +14,13 @@ export const metadata: Metadata = buildMetadata({
   path: "/about",
 });
 import { Section, SectionTitle } from "@/components/Section";
+import { SectionBackground } from "@/components/SectionBackground";
+import { HeroBackground } from "@/components/hero/HeroBackground";
+import { StatCard } from "@/components/hero/StatCard";
 import { Target, Users, ShieldCheck, Mail } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
-import HoverCard from "@/components/animations/HoverCard";
+import { HeroBackgroundCard } from "@/components/HeroBackgroundCard";
 
 const query = groq`*[_type == "about"][0]{
   heading,
@@ -35,61 +38,89 @@ export default async function About() {
   const data = await sanityFetch<any>(query, {}, { tags: ["about"] });
 
   return (
-    <div className="pt-[72px]">
+    <div>
 
       {/* HERO */}
-      <Section className="bg-surface">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="relative isolate overflow-hidden bg-[#06092a] text-white">
+        <HeroBackground />
 
-          {/* TEXT */}
-          <FadeIn>
-            <div>
-              <span className="text-accent text-xs font-bold uppercase tracking-widest mb-6 block">
-                Our Identity
-              </span>
+        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 pt-[100px] md:pt-[120px] pb-20 md:pb-28">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-              <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-8">
-                {data.heading}
-              </h1>
-
-              <p className="text-lg text-text-muted leading-relaxed font-light max-w-2xl">
-                {data.subtext}
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* IMAGE */}
-          <div className="relative">
-
-            <ScaleIn>
-              <div className="group relative aspect-[4/3] rounded-card overflow-hidden shadow-xl border border-border">
-                <Image
-                  src={urlFor(data.image).url()}
-                  alt="About"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            </ScaleIn>
-
-            {/* FLOATING STAT */}
-            <FadeIn delay={0.2}>
-              <div className="absolute -bottom-8 -left-8 bg-white p-8 rounded-card border border-border shadow-xl hidden md:block transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                <div className="text-3xl font-bold text-primary mb-1">
-                  {data.statsNumber}
+            {/* TEXT */}
+            <FadeIn>
+              <div>
+                <div className="inline-flex items-center gap-2 mb-6 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7aa2ff]" />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
+                    Our Identity
+                  </span>
                 </div>
-                <div className="text-text-muted text-xs font-bold uppercase tracking-widest">
-                  {data.statsLabel}
-                </div>
+
+                <h1
+                  className="font-extrabold mb-6 leading-[1.05] tracking-[-0.015em] text-white"
+                  style={{ fontSize: "clamp(2rem, 1.4rem + 2.4vw, 3.5rem)" }}
+                >
+                  {data.heading}
+                </h1>
+
+                <p className="text-base md:text-[17px] text-white/65 leading-relaxed font-light max-w-2xl">
+                  {data.subtext}
+                </p>
               </div>
             </FadeIn>
 
-          </div>
+            {/* IMAGE */}
+            <div className="relative">
 
+              <ScaleIn>
+                <div
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10"
+                  style={{
+                    boxShadow:
+                      "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <Image
+                    src={urlFor(data.image).url()}
+                    alt="About"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Subtle navy gradient overlay to fuse the image into the hero atmosphere */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none" />
+                  {/* Inner hairline highlight */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"
+                  />
+                </div>
+              </ScaleIn>
+
+              {/* FLOATING STAT — reuses the homepage hero stat card */}
+              <FadeIn delay={0.2}>
+                <div className="absolute -bottom-8 -left-8 hidden md:block w-[240px] transition-transform duration-300 hover:-translate-y-1">
+                  <StatCard
+                    value={data.statsNumber}
+                    label={data.statsLabel}
+                  />
+                </div>
+              </FadeIn>
+
+            </div>
+
+          </div>
         </div>
-      </Section>
+
+        {/* Bottom anchor — keeps the deep navy uniform to the section edge before
+            the light values section creates the intentional contrast break. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#05071f]/60 to-[#04061a]"
+        />
+      </section>
 
       {/* VALUES */}
       <Section>
@@ -99,21 +130,21 @@ export default async function About() {
 
             return (
               <ScaleIn key={i} delay={i * 0.1}>
-                <HoverCard className="p-8 rounded-card bg-white border border-border hover:border-accent/30">
+                <HeroBackgroundCard>
+                  <div className="p-8">
+                    <div className="w-12 h-12 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent group-hover:border-accent">
+                      <Icon className="w-6 h-6 text-[#7aa2ff] transition-colors duration-300 group-hover:text-white" />
+                    </div>
 
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent">
-                    <Icon className="w-6 h-6 text-accent transition-colors duration-300 group-hover:text-white" />
+                    <h3 className="text-xl font-bold text-white mb-4">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-white/70 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-
-                  <h3 className="text-xl font-bold text-primary mb-4">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-text-muted text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-
-                </HoverCard>
+                </HeroBackgroundCard>
               </ScaleIn>
             );
           })}
@@ -123,9 +154,8 @@ export default async function About() {
       {/* CONTACT */}
       <Section className="bg-surface pb-32">
         <FadeIn>
-          <div className="relative overflow-hidden bg-gradient-to-br from-primary via-[#1a2260] to-[#1e2b7a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative isolate overflow-hidden bg-[#06092a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
+            <SectionBackground />
 
             <div className="relative">
               <SectionTitle

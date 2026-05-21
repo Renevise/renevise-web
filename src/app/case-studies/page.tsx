@@ -7,6 +7,7 @@ export const revalidate = 60;
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/Section";
+import { SectionBackground } from "@/components/SectionBackground";
 import { ArrowRight } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
@@ -58,18 +59,21 @@ export default async function CaseStudies() {
       <JsonLd data={caseStudySchema} />
 
       {/* HERO */}
-      <Section className="bg-primary text-white">
-        <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
-              Our Impact
-            </h1>
-            <p className="text-lg text-white/70">
-              Real problems. Structured solutions. Measured results.
-            </p>
-          </div>
-        </FadeIn>
-      </Section>
+      <section className="relative isolate overflow-hidden bg-[#06092a] text-white py-24 px-6 md:py-32">
+        <SectionBackground />
+        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
+                Our Impact
+              </h1>
+              <p className="text-lg text-white/70">
+                Real problems. Structured solutions. Measured results.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
 
       {/* GRID */}
       <Section>

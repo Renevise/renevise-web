@@ -21,7 +21,14 @@ import {
   RelatedCaseStudies,
   ServiceCTA,
 } from "@/components/service";
-import { h1 } from "motion/react-client";
+import { StatsBar } from "@/components/hero/StatsBar";
+
+const SERVICE_TRUST_METRICS = [
+  { value: "50+", label: "Projects Delivered" },
+  { value: "12+", label: "Industries Served" },
+  { value: "98%", label: "Client Retention" },
+  { value: "24/7", label: "Priority Support" },
+];
 
 const serviceQuery = groq`*[_type == "service" && slug.current == $slug][0]{
   _id,
@@ -139,7 +146,7 @@ export default async function ServiceDetail({
   };
 
   return (
-    <div className="pt-[72px]">
+    <div>
       <JsonLd data={serviceSchema} />
 
       <ServiceHero
@@ -148,6 +155,13 @@ export default async function ServiceDetail({
         description={service.description}
         image={service.image}
       />
+
+      {/* STATS — floats across the hero / overview boundary (md+); stacks naturally on mobile */}
+      <div className="relative z-20 px-5 sm:px-6 md:-mt-[88px] lg:-mt-[96px]">
+        <div className="mx-auto max-w-7xl 2xl:max-w-[1400px]">
+          <StatsBar stats={SERVICE_TRUST_METRICS} />
+        </div>
+      </div>
 
       <ServiceOverview
         heading={service.overviewHeading}
