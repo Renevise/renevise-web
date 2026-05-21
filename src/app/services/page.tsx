@@ -14,6 +14,7 @@ import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata, siteConfig } from "@/lib/seo";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 
 const query = groq`*[_type == "service"]{
   _id,
@@ -61,18 +62,21 @@ export default async function Services() {
       <JsonLd data={serviceSchema} />
 
       {/* HERO */}
-      <Section className="bg-surface border-b border-border">
-        <FadeIn>
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-6">
-              Capabilities
-            </h1>
-            <p className="text-lg text-text-muted leading-relaxed font-light">
-              We provide outcome-driven technology services designed for high-performing organizations. No buzzwords, just business value.
-            </p>
-          </div>
-        </FadeIn>
-      </Section>
+      <section className="relative isolate overflow-hidden bg-[#06092a] text-white py-24 px-6 md:py-32 border-b border-white/10">
+        <HeroBackground />
+        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto">
+          <FadeIn>
+            <div className="text-center max-w-3xl mx-auto">
+              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
+                Capabilities
+              </h1>
+              <p className="text-lg text-white/70 leading-relaxed font-light">
+                We provide outcome-driven technology services designed for high-performing organizations. No buzzwords, just business value.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
 
       {/* SERVICES */}
       {services.map((service: any, idx: number) => {

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { SectionBackground } from "@/components/SectionBackground";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 import { ArrowRight } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
@@ -123,18 +124,29 @@ export default async function CaseStudies() {
       {/* FINAL CTA */}
       <Section className="text-center pt-0 pb-32">
         <ScaleIn>
-          <div className="max-w-xl mx-auto p-12 rounded-card border border-border bg-surface shadow-sm hover:shadow-lg transition-all duration-300">
-            <h3 className="text-xl font-bold text-primary mb-4">
-              Ready to be our next success story?
-            </h3>
+          <div className="relative isolate max-w-xl mx-auto p-12 rounded-card border border-white/10 bg-[#06092a] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+            style={{
+              boxShadow:
+                "0 18px 40px -20px rgba(0,0,0,0.55), 0 10px 30px -18px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
+            }}>
+            <HeroBackground />
+            <div className="relative z-10">
+              <h3 className="text-xl font-bold text-white mb-4">
+                Ready to be our next success story?
+              </h3>
 
-            <Link
-              href="/contact"
-              className="text-accent font-bold flex items-center justify-center gap-2 transition-all duration-300 hover:translate-x-1"
-            >
-              Get in touch to discuss your project
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
+              <Link
+                href="/contact"
+                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                />
+                <span className="relative">Get in touch to discuss your project</span>
+                <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </div>
         </ScaleIn>
       </Section>
