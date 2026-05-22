@@ -10,6 +10,7 @@ const KNOWN_TYPES = new Set([
   "service",
   "caseStudy",
   "testimonial",
+  "siteSettings",
 ]);
 
 export async function POST(req: NextRequest) {

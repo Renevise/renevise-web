@@ -17,7 +17,22 @@ import { Section, SectionTitle } from "@/components/Section";
 import { SectionBackground } from "@/components/SectionBackground";
 import { HeroBackground } from "@/components/hero/HeroBackground";
 import { StatCard } from "@/components/hero/StatCard";
-import { Target, Users, ShieldCheck, Mail } from "lucide-react";
+import {
+  Target,
+  Users,
+  ShieldCheck,
+  Mail,
+  Rocket,
+  Sparkles,
+  Compass,
+  HeartHandshake,
+  Layers,
+  Cpu,
+  Workflow,
+  Gauge,
+  LineChart,
+  type LucideIcon,
+} from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
 import { HeroBackgroundCard } from "@/components/HeroBackgroundCard";
@@ -28,11 +43,30 @@ const query = groq`*[_type == "about"][0]{
   statsNumber,
   statsLabel,
   email,
-  values,
+  values[]{
+    icon,
+    title,
+    description
+  },
   image
 }`;
 
-const iconMap = [Target, ShieldCheck, Users];
+const iconMap: Record<string, LucideIcon> = {
+  target: Target,
+  "shield-check": ShieldCheck,
+  users: Users,
+  rocket: Rocket,
+  sparkles: Sparkles,
+  compass: Compass,
+  "heart-handshake": HeartHandshake,
+  layers: Layers,
+  cpu: Cpu,
+  workflow: Workflow,
+  gauge: Gauge,
+  "line-chart": LineChart,
+};
+
+const fallbackIcons: LucideIcon[] = [Target, ShieldCheck, Users];
 
 export default async function About() {
   const data = await sanityFetch<any>(query, {}, { tags: ["about"] });
@@ -126,7 +160,9 @@ export default async function About() {
       <Section>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {data.values?.map((item: any, i: number) => {
-            const Icon = iconMap[i];
+            const Icon =
+              (item?.icon && iconMap[item.icon]) ??
+              fallbackIcons[i % fallbackIcons.length];
 
             return (
               <ScaleIn key={i} delay={i * 0.1} className="h-full">

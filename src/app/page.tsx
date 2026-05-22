@@ -22,6 +22,7 @@ import ScaleIn from "@/components/animations/ScaleIn";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { StatsBar } from "@/components/hero/StatsBar";
 import { SectionBackground } from "@/components/SectionBackground";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 import { Quote } from "lucide-react";
 
 // QUERIES
@@ -183,69 +184,96 @@ export default async function Home() {
       </Section>
 
       {/* TESTIMONIALS */}
-      <Section className="bg-surface">
-        <SectionTitle
-          label="Client Trust"
-          title="Trusted by ambitious teams"
-          subtitle="Reliable solutions for decision makers who need outcomes, not buzzwords."
-        />
+      <section className="relative isolate overflow-hidden bg-[#06092a] text-white">
+        <HeroBackground />
 
-        {testimonials.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
-            {testimonials.map((t: any, idx: number) => (
-              <ScaleIn key={t._id} delay={idx * 0.08} className="h-full">
-                <figure className="group rv-card relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white p-8 md:p-10">
-                  <span className="rv-card-glow" aria-hidden />
-                  <Quote
-                    aria-hidden
-                    className="absolute right-7 top-7 w-9 h-9 text-accent/15 transition-[color,transform] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:text-accent/30 group-hover:rotate-[-6deg]"
-                    strokeWidth={1.5}
-                  />
-
-                  <div
-                    aria-hidden
-                    className="mb-6 h-[2px] w-10 rounded-full bg-gradient-to-r from-accent to-accent/0 transition-[width] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:w-16"
-                  />
-
-                  <blockquote className="relative flex-1">
-                    <p className="text-[17px] md:text-[18px] text-primary/85 leading-relaxed font-normal">
-                      &ldquo;{t.content}&rdquo;
-                    </p>
-                  </blockquote>
-
-                  <figcaption className="mt-8 flex items-center gap-4 pt-6 border-t border-border/70">
-                    {t.image ? (
-                      <Image
-                        src={urlFor(t.image).url()}
-                        alt={t.name}
-                        width={48}
-                        height={48}
-                        className="w-12 h-12 rounded-full border border-border object-cover shadow-[0_4px_12px_-4px_rgba(15,23,42,0.18)]"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full border border-border bg-gradient-to-br from-white to-[#eef3ff] flex items-center justify-center text-accent font-bold text-sm shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_12px_-4px_rgba(59,130,246,0.2)]">
-                        {t.name?.[0]}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <div className="font-semibold text-primary leading-tight">
-                        {t.name}
-                      </div>
-                      <div className="text-text-muted text-sm leading-tight mt-1">
-                        {t.role}
-                        {t.role && t.company ? " · " : ""}
-                        <span className="text-primary/70 font-medium">
-                          {t.company}
-                        </span>
-                      </div>
-                    </div>
-                  </figcaption>
-                </figure>
-              </ScaleIn>
-            ))}
+        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-24 md:py-32">
+          <div className="mb-12 max-w-3xl mx-auto text-center">
+            <span className="text-blue-400 text-[11px] font-bold uppercase tracking-[0.2em] mb-3 block">
+              Client Trust
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-[2.4rem] font-extrabold leading-[1.1] tracking-tight text-white mb-4">
+              Trusted by ambitious teams
+            </h2>
+            <p className="text-base md:text-lg text-white/70 leading-relaxed">
+              Reliable solutions for decision makers who need outcomes, not buzzwords.
+            </p>
           </div>
-        )}
-      </Section>
+
+          {testimonials.length > 0 && (
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
+              {testimonials.map((t: any, idx: number) => (
+                <ScaleIn key={t._id} delay={idx * 0.08} className="h-full">
+                  <figure
+                    className="group rv-card-dark relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] p-8 md:p-10 backdrop-blur-2xl"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(140deg, rgba(24,33,96,0.55) 0%, rgba(15,21,56,0.65) 55%, rgba(8,12,40,0.75) 100%)",
+                    }}
+                  >
+                    <span className="rv-card-glow" aria-hidden />
+                    {/* upper-right brand glow lobe */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute -top-20 -right-14 h-44 w-44 rounded-full bg-[#3b82f6]/22 blur-[70px] opacity-90 transition-opacity duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:opacity-100"
+                    />
+                    {/* hairline top highlight */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    />
+
+                    <Quote
+                      aria-hidden
+                      className="absolute right-7 top-7 w-9 h-9 text-[#7aa2ff]/25 transition-[color,transform] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:text-[#7aa2ff]/45 group-hover:rotate-[-6deg]"
+                      strokeWidth={1.5}
+                    />
+
+                    <div
+                      aria-hidden
+                      className="relative mb-6 h-[2px] w-10 rounded-full bg-gradient-to-r from-[#7aa2ff] to-[#7aa2ff]/0 transition-[width] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:w-16"
+                    />
+
+                    <blockquote className="relative flex-1">
+                      <p className="text-[17px] md:text-[18px] text-white/85 leading-relaxed font-normal">
+                        &ldquo;{t.content}&rdquo;
+                      </p>
+                    </blockquote>
+
+                    <figcaption className="relative mt-8 flex items-center gap-4 pt-6 border-t border-white/10">
+                      {t.image ? (
+                        <Image
+                          src={urlFor(t.image).url()}
+                          alt={t.name}
+                          width={48}
+                          height={48}
+                          className="w-12 h-12 rounded-full border border-white/15 object-cover shadow-[0_4px_12px_-4px_rgba(0,0,0,0.45)]"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full border border-white/15 bg-gradient-to-br from-white/[0.10] to-white/[0.02] flex items-center justify-center text-[#9bb7ff] font-bold text-sm shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_4px_12px_-4px_rgba(59,130,246,0.35)]">
+                          {t.name?.[0]}
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <div className="font-semibold text-white leading-tight">
+                          {t.name}
+                        </div>
+                        <div className="text-white/60 text-sm leading-tight mt-1">
+                          {t.role}
+                          {t.role && t.company ? " · " : ""}
+                          <span className="text-white/80 font-medium">
+                            {t.company}
+                          </span>
+                        </div>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </ScaleIn>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* FINAL CTA */}
       <Section className="bg-surface pb-32">

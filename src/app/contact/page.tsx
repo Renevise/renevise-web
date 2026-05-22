@@ -48,6 +48,11 @@ export default async function Contact() {
     data?.heroSubheading ??
     "Tell us about your goals — our consultants respond within two business hours with a tailored plan.";
 
+  const whatsappDigits = data?.whatsapp
+    ? String(data.whatsapp).replace(/[^\d]/g, "")
+    : "";
+  const whatsappHref = whatsappDigits ? `https://wa.me/${whatsappDigits}` : undefined;
+
   const methods: ContactMethod[] = [
     {
       icon: Mail,
@@ -71,6 +76,7 @@ export default async function Contact() {
       title: "Direct Message",
       description: "Quick queries via WhatsApp.",
       value: data?.whatsapp,
+      href: whatsappHref,
     },
   ];
 
@@ -170,10 +176,18 @@ export default async function Contact() {
                   const cardClass =
                     "group rv-card relative isolate block h-full overflow-hidden rounded-card border border-border bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2";
 
+                  const isExternal = m.href?.startsWith("http");
+
                   return (
                     <li key={m.label}>
                       {m.href ? (
-                        <a href={m.href} className={cardClass}>
+                        <a
+                          href={m.href}
+                          className={cardClass}
+                          {...(isExternal
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                        >
                           <span className="rv-card-glow" aria-hidden />
                           {inner}
                         </a>

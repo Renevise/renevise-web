@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { Footer, type FooterSettings } from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/seo";
 import { sanityFetch } from "@/lib/sanity";
@@ -12,6 +12,17 @@ import type { NavService } from "@/types";
 export const revalidate = 60;
 
 const navServicesQuery = groq`*[_type == "service"]{ title, slug } | order(title asc)`;
+
+const siteSettingsQuery = groq`*[_type == "siteSettings"][0]{
+  footerDescription,
+  email,
+  addressLines,
+  linkedinUrl,
+  whatsappUrl,
+  githubUrl,
+  privacyPolicyUrl,
+  termsUrl
+}`;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -95,7 +106,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const navServices = await sanityFetch<NavService[]>(navServicesQuery, {}, { tags: ["service"] });
+  const [navServices, siteSettings] = await Promise.all([
+    sanityFetch<NavService[]>(navServicesQuery, {}, { tags: ["service"] }),
+    sanityFetch<FooterSettings | null>(siteSettingsQuery, {}, {
+      tags: ["siteSettings"],
+    }),
+  ]);
 
   return (
     <html lang="en" className={inter.variable}>
@@ -104,7 +120,7 @@ export default async function RootLayout({
         <div className="flex flex-col min-h-screen">
           <Navbar services={navServices} />
           <main className="flex-grow">{children}</main>
-          <Footer />
+          <Footer settings={siteSettings} services={navServices} />
         </div>
       </body>
     </html>
