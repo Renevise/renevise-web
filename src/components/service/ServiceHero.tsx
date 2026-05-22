@@ -16,7 +16,7 @@ interface ServiceHeroProps {
 
 export function ServiceHero({
   title,
-  tagline,
+  tagline,  
   description,
   image,
   capabilityLabel = "Capability",
