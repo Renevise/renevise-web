@@ -29,10 +29,10 @@ export function ProblemsOutcomes({ problems, outcomes }: Props) {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* PROBLEMS */}
           {hasProblems && (
-            <FadeIn>
+            <FadeIn className="h-full">
               <div className="relative h-full rounded-card bg-surface border border-border p-8 md:p-10 overflow-hidden">
                 <div
                   aria-hidden
@@ -74,7 +74,7 @@ export function ProblemsOutcomes({ problems, outcomes }: Props) {
 
           {/* OUTCOMES */}
           {hasOutcomes && (
-            <FadeIn delay={0.1}>
+            <FadeIn delay={0.1} className="h-full">
               <div className="relative h-full rounded-card bg-primary text-white border border-primary p-8 md:p-10 overflow-hidden shadow-xl">
                 <div
                   aria-hidden

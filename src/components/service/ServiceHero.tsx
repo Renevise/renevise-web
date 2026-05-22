@@ -61,22 +61,19 @@ export function ServiceHero({
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Link
                     href="/contact"
-                    className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
+                    className="group rv-btn-primary inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white"
                   >
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                    />
+                    <span className="rv-btn-sheen" aria-hidden />
                     <span className="relative">Start Project</span>
-                    <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    <ArrowRight className="relative w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5" />
                   </Link>
 
                   <Link
                     href="/case-studies"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/[0.08] hover:border-white/25"
+                    className="group rv-btn-ghost inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-md hover:bg-white/[0.09] hover:border-white/30"
                   >
                     View Related Work
-                    <ArrowUpRight className="w-4 h-4" />
+                    <ArrowUpRight className="w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
               </div>
@@ -88,7 +85,7 @@ export function ServiceHero({
             {image ? (
               <ScaleIn>
                 <div
-                  className="relative aspect-[5/4] lg:aspect-[5/4] xl:aspect-[4/3] overflow-hidden rounded-2xl border border-white/10"
+                  className="group relative aspect-[5/4] lg:aspect-[5/4] xl:aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 transition-[transform,border-color,box-shadow] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] hover:-translate-y-1 hover:border-white/20"
                   style={{
                     boxShadow:
                       "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
@@ -100,7 +97,7 @@ export function ServiceHero({
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="object-cover"
+                    className="object-cover will-change-transform transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
                   {/* Subtle navy gradient overlay to fuse the image into the hero atmosphere */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none" />

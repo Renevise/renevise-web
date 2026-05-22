@@ -69,24 +69,23 @@ export function TrustSection() {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch">
           {ITEMS.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <FadeIn key={item.title} delay={Math.min(idx * 0.06, 0.36)}>
+              <FadeIn key={item.title} delay={Math.min(idx * 0.06, 0.36)} className="h-full">
                 <div
-                  className="group relative h-full overflow-hidden rounded-2xl border border-white/[0.08] p-7 md:p-8 backdrop-blur-2xl transition-[transform,box-shadow,border-color] duration-300 hover:border-white/[0.14] hover:-translate-y-0.5"
+                  className="group rv-card-dark relative h-full overflow-hidden rounded-2xl border border-white/[0.08] p-7 md:p-8 backdrop-blur-2xl"
                   style={{
                     backgroundImage:
                       "linear-gradient(140deg, rgba(24,33,96,0.55) 0%, rgba(15,21,56,0.65) 55%, rgba(8,12,40,0.75) 100%)",
-                    boxShadow:
-                      "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.22), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(255,255,255,0.03)",
                   }}
                 >
+                  <span className="rv-card-glow" aria-hidden />
                   {/* upper-right brand glow lobe */}
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute -top-20 -right-14 h-44 w-44 rounded-full bg-[#3b82f6]/22 blur-[70px] opacity-90"
+                    className="pointer-events-none absolute -top-20 -right-14 h-44 w-44 rounded-full bg-[#3b82f6]/22 blur-[70px] opacity-90 transition-opacity duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:opacity-100"
                   />
                   {/* hairline top highlight */}
                   <div
@@ -95,7 +94,7 @@ export function TrustSection() {
                   />
 
                   <div className="relative">
-                    <div className="w-11 h-11 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.10] to-white/[0.02] text-[#9bb7ff] flex items-center justify-center mb-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-6px_12px_-6px_rgba(59,130,246,0.5)] transition-colors duration-300 group-hover:text-white">
+                    <div className="w-11 h-11 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.10] to-white/[0.02] text-[#9bb7ff] flex items-center justify-center mb-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-6px_12px_-6px_rgba(59,130,246,0.5)] transition-[color,transform,border-color] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:text-white group-hover:border-white/20 group-hover:-translate-y-0.5">
                       <Icon className="w-5 h-5" strokeWidth={1.75} />
                     </div>
                     <h3 className="text-lg md:text-xl font-bold text-white mb-3 leading-snug">

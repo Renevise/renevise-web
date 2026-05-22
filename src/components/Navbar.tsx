@@ -48,16 +48,22 @@ export function Navbar({ services = [] }: NavbarProps) {
   }
 
   const isServicesActive = pathname.startsWith('/services');
-  // Dark glass when sitting over a dark hero (home, about, service detail),
-  // top of page only. The `/services/` prefix (with trailing slash) excludes
-  // the services index and only matches individual service detail routes.
+  // Dark glass when sitting over a dark premium hero (home, about, services
+  // index + details, case-studies index + details). Top of page only — once
+  // the user scrolls past the hero we switch back to the light pill so the
+  // navbar reads against the white content sections below.
   const onDark =
     (pathname === '/' ||
       pathname === '/about' ||
-      pathname.startsWith('/services/')) &&
+      pathname === '/services' ||
+      pathname.startsWith('/services/') ||
+      pathname === '/case-studies' ||
+      pathname.startsWith('/case-studies/') ||
+      pathname === '/contact') &&
     !scrolled;
 
-  const linkBase = 'text-[13px] font-medium transition-colors';
+  const linkBase =
+    'relative text-[13px] font-medium transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 rounded-sm';
   const linkIdle = onDark
     ? 'text-white/65 hover:text-white'
     : 'text-primary/70 hover:text-accent';
@@ -78,13 +84,13 @@ export function Navbar({ services = [] }: NavbarProps) {
         )}
       >
         <div className="flex h-[52px] items-center justify-between pl-3 pr-2 sm:pl-5 sm:pr-3">
-          <Link href="/" className="group flex items-center gap-2.5">
+          <Link href="/" className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 rounded-md">
             <span
               className={cn(
-                'relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl transition-all duration-300',
+                'relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl transition-[transform,box-shadow,ring-color] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:-translate-y-0.5',
                 onDark
-                  ? 'bg-gradient-to-br from-[#1a2554]/85 via-[#0f1640]/90 to-[#080d2a]/95 ring-1 ring-inset ring-white/[0.09] shadow-[0_6px_18px_-4px_rgba(59,130,246,0.45),0_2px_6px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.08)]'
-                  : 'bg-gradient-to-br from-white to-[#eef3ff] ring-1 ring-inset ring-[#3b82f6]/15 shadow-[0_4px_14px_-3px_rgba(59,130,246,0.25),inset_0_1px_0_0_rgba(255,255,255,0.9)]'
+                  ? 'bg-gradient-to-br from-[#1a2554]/85 via-[#0f1640]/90 to-[#080d2a]/95 ring-1 ring-inset ring-white/[0.09] shadow-[0_6px_18px_-4px_rgba(59,130,246,0.45),0_2px_6px_-1px_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.08)] group-hover:shadow-[0_10px_26px_-6px_rgba(59,130,246,0.65),0_2px_6px_-1px_rgba(0,0,0,0.45),inset_0_1px_0_0_rgba(255,255,255,0.12)]'
+                  : 'bg-gradient-to-br from-white to-[#eef3ff] ring-1 ring-inset ring-[#3b82f6]/15 shadow-[0_4px_14px_-3px_rgba(59,130,246,0.25),inset_0_1px_0_0_rgba(255,255,255,0.9)] group-hover:shadow-[0_8px_22px_-3px_rgba(59,130,246,0.38),inset_0_1px_0_0_rgba(255,255,255,0.95)]'
               )}
             >
               {/* Subtle radial highlight */}
@@ -158,44 +164,55 @@ export function Navbar({ services = [] }: NavbarProps) {
               <AnimatePresence>
                 {servicesOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white shadow-xl"
+                    initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] as const }}
+                    style={{ transformOrigin: 'top center' }}
+                    className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white shadow-[0_24px_60px_-20px_rgba(15,23,42,0.25),0_8px_24px_-12px_rgba(15,23,42,0.18)]"
                   >
-                  
+
                     <Link
                       href="/services"
                       onClick={() => setServicesOpen(false)}
-                      className="group relative isolate block overflow-hidden border-b border-white/10 bg-[#06092a] px-4 py-3 text-sm font-semibold text-white transition-shadow duration-300 hover:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3b82f6]/70"
+                      className="group relative isolate block overflow-hidden border-b border-white/10 bg-[#06092a] px-4 py-3 text-sm font-semibold text-white transition-shadow duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3b82f6]/70"
                     >
                       <SectionBackground />
                       <span className="relative z-10 flex items-center justify-between gap-2">
                         <span>All Services</span>
                         <span
                           aria-hidden
-                          className="text-white/70 transition-transform duration-200 group-hover:translate-x-0.5"
+                          className="text-white/70 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-1"
                         >
                           →
                         </span>
                       </span>
                     </Link>
-                    {services.map((s) => (
-                      <Link
-                        key={s.slug.current}
-                        href={`/services/${s.slug.current}`}
-                        onClick={() => setServicesOpen(false)}
-                        className={cn(
-                          'block px-4 py-2.5 text-sm transition-colors hover:bg-surface hover:text-accent',
-                          pathname === `/services/${s.slug.current}`
-                            ? 'font-medium text-accent'
-                            : 'text-text-muted'
-                        )}
-                      >
-                        {s.title}
-                      </Link>
-                    ))}
+                    {services.map((s) => {
+                      const active = pathname === `/services/${s.slug.current}`;
+                      return (
+                        <Link
+                          key={s.slug.current}
+                          href={`/services/${s.slug.current}`}
+                          onClick={() => setServicesOpen(false)}
+                          className={cn(
+                            'group relative block px-4 py-2.5 text-sm transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:bg-surface hover:text-accent focus-visible:outline-none focus-visible:bg-surface focus-visible:text-accent',
+                            active ? 'font-medium text-accent' : 'text-text-muted'
+                          )}
+                        >
+                          <span
+                            aria-hidden
+                            className={cn(
+                              'pointer-events-none absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r-sm bg-accent transition-all duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)]',
+                              active
+                                ? 'scale-y-100 opacity-100'
+                                : 'scale-y-50 opacity-0 group-hover:scale-y-100 group-hover:opacity-100'
+                            )}
+                          />
+                          {s.title}
+                        </Link>
+                      );
+                    })}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -216,12 +233,9 @@ export function Navbar({ services = [] }: NavbarProps) {
 
             <Link
               href="/contact"
-              className="group relative ml-1 inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-3.5 py-1.5 text-[13px] font-semibold text-white shadow-[0_8px_22px_-8px_rgba(59,130,246,0.6)] transition-all duration-300 hover:shadow-[0_14px_30px_-8px_rgba(59,130,246,0.8)]"
+              className="group rv-btn-primary ml-1 inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-3.5 py-1.5 text-[13px] font-semibold text-white"
             >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-              />
+              <span className="rv-btn-sheen" aria-hidden />
               <span className="relative">Get a Quote</span>
             </Link>
           </div>
@@ -243,7 +257,7 @@ export function Navbar({ services = [] }: NavbarProps) {
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] as const }}
               className={cn(
                 'absolute inset-x-0 top-full mt-2 overflow-hidden rounded-2xl border shadow-xl md:hidden',
                 onDark
@@ -301,7 +315,7 @@ export function Navbar({ services = [] }: NavbarProps) {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] as const }}
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-0.5 pb-1 pl-3">
@@ -357,12 +371,9 @@ export function Navbar({ services = [] }: NavbarProps) {
 
                 <Link
                   href="/contact"
-                  className="group relative mt-1 inline-flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-4 py-2.5 text-center text-sm font-semibold text-white shadow-[0_10px_28px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_16px_36px_-10px_rgba(59,130,246,0.8)]"
+                  className="group rv-btn-primary mt-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-4 py-2.5 text-center text-sm font-semibold text-white"
                 >
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                  />
+                  <span className="rv-btn-sheen" aria-hidden />
                   <span className="relative">Get a Quote</span>
                 </Link>
               </div>

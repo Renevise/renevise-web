@@ -5,9 +5,11 @@ import { motion } from "motion/react";
 export default function ScaleIn({
   children,
   delay = 0,
+  className,
 }: {
   children: React.ReactNode;
   delay?: number;
+  className?: string;
 }) {
   return (
     <motion.div
@@ -15,6 +17,7 @@ export default function ScaleIn({
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
+      className={className}
     >
       {children}
     </motion.div>

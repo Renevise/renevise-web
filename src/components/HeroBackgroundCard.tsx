@@ -17,7 +17,8 @@ interface HeroBackgroundCardProps {
  * particles) plus matching border + multi-layer shadow. Drop in around any
  * card body; child content sits above the background via z-10.
  *
- * Sized for individual cards — keeps the rest of the section untouched.
+ * Hover behaviour is delegated to the shared `.rv-card-dark` utility so
+ * every dark card across the site speaks the same motion language.
  */
 export function HeroBackgroundCard({
   children,
@@ -29,17 +30,13 @@ export function HeroBackgroundCard({
     <div
       className={[
         "group relative isolate h-full overflow-hidden rounded-card border border-white/10 bg-[#06092a] text-white",
-        "transition-all duration-300",
-        noHover ? "" : "hover:-translate-y-0.5 hover:border-white/25",
+        noHover ? "" : "rv-card-dark",
         className,
       ].join(" ")}
-      style={{
-        boxShadow:
-          "0 18px 40px -20px rgba(0,0,0,0.55), 0 10px 30px -18px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
-        ...style,
-      }}
+      style={style}
     >
       <SectionBackground />
+      {!noHover && <span className="rv-card-glow" aria-hidden />}
       <div className="relative z-10 h-full">{children}</div>
     </div>
   );

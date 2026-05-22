@@ -59,9 +59,9 @@ export function TechStackSection({ categories }: Props) {
         )}
 
         {/* Grouped categories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch">
           {categories.map((cat, idx) => (
-            <FadeIn key={cat.title} delay={Math.min(idx * 0.06, 0.36)}>
+            <FadeIn key={cat.title} delay={Math.min(idx * 0.06, 0.36)} className="h-full">
               <HeroBackgroundCard>
                 <div className="p-7">
                   <div className="flex items-center gap-3 mb-5">
@@ -76,7 +76,7 @@ export function TechStackSection({ categories }: Props) {
                     {cat.technologies.map((t) => (
                       <span
                         key={t}
-                        className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[12px] font-semibold text-white/80 rounded-theme transition-all duration-200 hover:bg-accent hover:text-white hover:border-accent backdrop-blur-sm"
+                        className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[12px] font-semibold text-white/80 rounded-theme backdrop-blur-sm transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-0.5 hover:bg-accent hover:text-white hover:border-accent hover:shadow-[0_8px_18px_-8px_rgba(59,130,246,0.55)]"
                       >
                         {t}
                       </span>

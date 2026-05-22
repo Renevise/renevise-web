@@ -1,3 +1,8 @@
+/**
+ * Minimal premium card wrapper — applies the shared `rv-card` hover
+ * interaction (lift, layered shadow, border highlight) without altering
+ * the consumer's layout. Pass any layout/visual classes through `className`.
+ */
 export default function HoverCard({
   children,
   className = "",
@@ -6,9 +11,7 @@ export default function HoverCard({
   className?: string;
 }) {
   return (
-    <div
-      className={`group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}
-    >
+    <div className={`group rv-card ${className}`}>
       {children}
     </div>
   );

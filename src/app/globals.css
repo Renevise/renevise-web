@@ -13,12 +13,226 @@
 }
 
 @layer base {
+  :root {
+    /* ============================================================
+     * Premium interaction system — shared motion tokens.
+     * Reuse these everywhere so cards, buttons, links, and dropdowns
+     * speak the same motion language (Linear / Vercel feel).
+     * ============================================================ */
+    --rv-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --rv-ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+    --rv-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+    --rv-duration-fast: 180ms;
+    --rv-duration-base: 260ms;
+    --rv-duration-slow: 420ms;
+    --rv-duration-sheen: 800ms;
+  }
+
   body {
     @apply font-sans bg-surface text-text-main antialiased;
   }
 }
 
-/* Service tile micro-animations */
+/* ================================================================
+ * Premium card hover — light surfaces
+ * Subtle GPU-only lift, layered shadow growth, and gentle border
+ * highlight. Used on light cards (case study, capability, etc.).
+ * ================================================================ */
+.rv-card {
+  position: relative;
+  transition-property: transform, box-shadow, border-color, background-color;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 4px 12px -6px rgba(15, 23, 42, 0.05);
+}
+
+.rv-card:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(59, 130, 246, 0.32);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 40px -16px rgba(15, 23, 42, 0.12),
+    0 10px 26px -14px rgba(59, 130, 246, 0.22);
+}
+
+/* ================================================================
+ * Premium card hover — dark surfaces
+ * Same motion language, dark-card tuned shadow + brand glow.
+ * ================================================================ */
+.rv-card-dark {
+  position: relative;
+  transition-property: transform, box-shadow, border-color, background-color;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  box-shadow:
+    0 18px 40px -20px rgba(0, 0, 0, 0.55),
+    0 10px 30px -18px rgba(59, 130, 246, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.rv-card-dark:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 26px 56px -22px rgba(0, 0, 0, 0.65),
+    0 18px 44px -18px rgba(59, 130, 246, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Animated radial highlight that follows the card on hover.
+ * Drop a `<span class="rv-card-glow" aria-hidden />` inside the card
+ * to opt-in. The card must be `position: relative` and `overflow-hidden`. */
+.rv-card-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--rv-duration-slow) var(--rv-ease-out);
+  background: radial-gradient(
+    600px circle at 30% 0%,
+    rgba(122, 162, 255, 0.18),
+    transparent 55%
+  );
+}
+
+.group:hover > .rv-card-glow,
+.rv-card:hover .rv-card-glow,
+.rv-card-dark:hover .rv-card-glow {
+  opacity: 1;
+}
+
+/* ================================================================
+ * Premium primary CTA (gradient blue button)
+ * Smooth lift, deeper glow, animated sheen sweep on hover.
+ * Apply on top of existing gradient/padding classes; class adds the
+ * interaction quality without redesigning the button.
+ * ================================================================ */
+.rv-btn-primary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition-property: transform, box-shadow, filter;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  box-shadow:
+    0 10px 30px -10px rgba(59, 130, 246, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.rv-btn-primary:hover {
+  transform: translate3d(0, -1.5px, 0);
+  box-shadow:
+    0 18px 42px -10px rgba(59, 130, 246, 0.78),
+    0 6px 14px -6px rgba(59, 130, 246, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.rv-btn-primary:active {
+  transform: translate3d(0, 0, 0) scale(0.985);
+  transition-duration: var(--rv-duration-fast);
+  box-shadow:
+    0 8px 22px -10px rgba(59, 130, 246, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.rv-btn-primary:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #06092a,
+    0 0 0 4px rgba(122, 162, 255, 0.75),
+    0 18px 42px -10px rgba(59, 130, 246, 0.78);
+}
+
+/* ================================================================
+ * Premium ghost / glass CTA (white/translucent over dark)
+ * ================================================================ */
+.rv-btn-ghost {
+  position: relative;
+  transition-property: transform, background-color, border-color, box-shadow;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.rv-btn-ghost:hover {
+  transform: translate3d(0, -1.5px, 0);
+}
+
+.rv-btn-ghost:active {
+  transform: translate3d(0, 0, 0) scale(0.985);
+  transition-duration: var(--rv-duration-fast);
+}
+
+.rv-btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(122, 162, 255, 0.7);
+}
+
+/* ================================================================
+ * Sheen sweep — premium "shine" pass on hover. Place an inner
+ * `<span class="rv-btn-sheen" aria-hidden />` inside the button.
+ * Replaces the duplicated inline span pattern.
+ * ================================================================ */
+.rv-btn-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: translate3d(-110%, 0, 0);
+  transition: transform var(--rv-duration-sheen) var(--rv-ease-out);
+}
+
+.group:hover > .rv-btn-sheen,
+.rv-btn-primary:hover > .rv-btn-sheen,
+.rv-btn-ghost:hover > .rv-btn-sheen {
+  transform: translate3d(110%, 0, 0);
+}
+
+/* ================================================================
+ * Underline reveal for nav-style links (left-anchored, smooth)
+ * ================================================================ */
+.rv-link-underline {
+  position: relative;
+}
+
+.rv-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+  transform-origin: left center;
+  transform: scaleX(0);
+  opacity: 0.85;
+  transition: transform var(--rv-duration-base) var(--rv-ease-out);
+}
+
+.rv-link-underline:hover::after,
+.rv-link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ================================================================
+ * Service tile micro-animations (existing — preserved)
+ * ================================================================ */
 @keyframes rv-orbit-float {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50%      { transform: translate3d(0, -3px, 0); }
@@ -85,5 +299,34 @@
   .rv-marquee-left,
   .rv-marquee-right {
     animation: none !important;
+  }
+
+  /* Honor reduced-motion across the premium interaction system:
+   * keep color/shadow feedback, but drop translate / scale / sheen. */
+  .rv-card,
+  .rv-card-dark,
+  .rv-btn-primary,
+  .rv-btn-ghost {
+    transition-duration: var(--rv-duration-fast);
+  }
+
+  .rv-card:hover,
+  .rv-card-dark:hover,
+  .rv-btn-primary:hover,
+  .rv-btn-ghost:hover,
+  .rv-btn-primary:active,
+  .rv-btn-ghost:active {
+    transform: none;
+  }
+
+  .rv-btn-sheen,
+  .group:hover > .rv-btn-sheen,
+  .rv-btn-primary:hover > .rv-btn-sheen,
+  .rv-btn-ghost:hover > .rv-btn-sheen {
+    display: none;
+  }
+
+  .rv-link-underline::after {
+    transition-duration: var(--rv-duration-fast);
   }
 }

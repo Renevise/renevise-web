@@ -14,7 +14,7 @@ import ScaleIn from "@/components/animations/ScaleIn";
 import HoverCard from "@/components/animations/HoverCard";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata, siteConfig } from "@/lib/seo";
-import { HeroBackground } from "@/components/hero/HeroBackground";
+import { DarkSection } from "@/components/DarkSection";
 
 const query = groq`*[_type == "service"]{
   _id,
@@ -58,25 +58,35 @@ export default async function Services() {
   };
 
   return (
-    <div className="pt-[72px]">
+    <div>
       <JsonLd data={serviceSchema} />
 
       {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-[#06092a] text-white py-24 px-6 md:py-32 border-b border-white/10">
-        <HeroBackground />
-        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto">
-          <FadeIn>
-            <div className="text-center max-w-3xl mx-auto">
-              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
-                Capabilities
-              </h1>
-              <p className="text-lg text-white/70 leading-relaxed font-light">
-                We provide outcome-driven technology services designed for high-performing organizations. No buzzwords, just business value.
-              </p>
+      <DarkSection
+        className="border-b border-white/10"
+        innerClassName="pt-[120px] md:pt-[140px] pb-20 md:pb-24"
+        withBottomAnchor
+      >
+        <FadeIn>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 mb-6 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#7aa2ff]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
+                What we do
+              </span>
             </div>
-          </FadeIn>
-        </div>
-      </section>
+            <h1
+              className="font-extrabold mb-5 leading-[1.05] tracking-[-0.015em] text-white"
+              style={{ fontSize: "clamp(2.25rem, 1.4rem + 2.6vw, 3.75rem)" }}
+            >
+              Capabilities
+            </h1>
+            <p className="text-base md:text-[17px] text-white/65 leading-relaxed font-light max-w-2xl mx-auto">
+              Outcome-driven technology services designed for high-performing organizations. No buzzwords — just measurable business value.
+            </p>
+          </div>
+        </FadeIn>
+      </DarkSection>
 
       {/* SERVICES */}
       {services.map((service: any, idx: number) => {
@@ -153,10 +163,10 @@ export default async function Services() {
                 {/* CTA */}
                 <Link
                   href={`/services/${service.slug?.current}`}
-                  className="mt-12 inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-theme font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+                  className="group/svc mt-12 inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-theme font-bold will-change-transform transition-[transform,box-shadow,background-color] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-0.5 hover:bg-[#1a2570] hover:shadow-[0_18px_36px_-14px_rgba(18,25,69,0.45)] active:translate-y-0 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2"
                 >
                   Explore Service
-                  <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover/svc:translate-x-1" />
                 </Link>
 
               </div>

@@ -189,9 +189,9 @@ export function HeroVisual({ resetSignal, onReset }: HeroVisualProps) {
           <button
             type="button"
             onClick={onReset}
-            className="ml-1 inline-flex items-center gap-1 rounded-full bg-white/[0.08] px-2 py-[3px] text-[11px] font-medium text-white/90 transition-colors hover:bg-white/[0.14]"
+            className="group/reset ml-1 inline-flex items-center gap-1 rounded-full bg-white/[0.08] px-2 py-[3px] text-[11px] font-medium text-white/90 transition-[background-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:bg-white/[0.16] hover:shadow-[0_4px_12px_-4px_rgba(122,162,255,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aa2ff]/60"
           >
-            <RotateCcw className="h-3 w-3" />
+            <RotateCcw className="h-3 w-3 transition-transform duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover/reset:-rotate-[28deg]" />
             Reset
           </button>
         </div>

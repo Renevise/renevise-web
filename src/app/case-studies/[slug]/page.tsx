@@ -5,19 +5,22 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 
 export const revalidate = 60;
+export const dynamicParams = true;
+
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "next-sanity";
 import { Section } from "@/components/Section";
-import { SectionBackground } from "@/components/SectionBackground";
-import { ArrowRight, Settings, BarChart3, TrendingUp } from "lucide-react";
+import { DarkSection } from "@/components/DarkSection";
+import { HeroBackground } from "@/components/hero/HeroBackground";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
 import JsonLd from "@/components/JsonLd";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 import type { CaseStudy } from "@/types";
+import { ArrowRight, ArrowUpRight, Settings, BarChart3, TrendingUp } from "lucide-react";
 
-const caseStudyQuery = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
+const caseStudyQuery = groq`*[_type == "caseStudy" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   _id,
   title,
   client,
@@ -32,7 +35,7 @@ const caseStudyQuery = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
   "serviceSlug": service->slug.current
 }`;
 
-const allSlugsQuery = groq`*[_type == "caseStudy" && defined(slug.current)]{
+const allSlugsQuery = groq`*[_type == "caseStudy" && defined(slug.current) && !(_id in path("drafts.**"))]{
   "slug": slug.current
 }`;
 
@@ -84,7 +87,7 @@ const portableTextComponents = {
 
 export async function generateStaticParams() {
   const slugs = await sanityFetch<{ slug: string }[]>(allSlugsQuery, {}, { tags: ["caseStudy"] });
-  return slugs.map((s) => ({ slug: s.slug }));
+  return slugs.filter((s) => s.slug).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -131,50 +134,99 @@ export default async function CaseStudyDetail({
   };
 
   return (
-    <div className="pt-[72px]">
+    <div>
       <JsonLd data={caseStudySchema} />
 
-      {/* HERO */}
-      <Section className="bg-surface border-b border-border">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      {/* HERO — dark premium hero matching ServiceHero */}
+      <DarkSection
+        innerClassName="pt-[100px] md:pt-[120px] pb-20 md:pb-28"
+        withBottomAnchor
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-[11fr_9fr] gap-y-10 lg:gap-x-14 items-center">
+          {/* LEFT — content */}
           <FadeIn>
-            {study.serviceTitle && (
-              <Link
-                href={
-                  study.serviceSlug
-                    ? `/services/${study.serviceSlug}`
-                    : "/services"
-                }
-                className="text-accent text-xs font-bold uppercase tracking-widest mb-6 inline-block transition-all duration-200 hover:tracking-[0.2em]"
+            <div className="max-w-[640px]">
+              {study.serviceTitle && (
+                <Link
+                  href={
+                    study.serviceSlug
+                      ? `/services/${study.serviceSlug}`
+                      : "/services"
+                  }
+                  className="group inline-flex items-center gap-2 mb-6 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-md transition-[background-color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:bg-white/[0.12] hover:border-white/25 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_-10px_rgba(122,162,255,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aa2ff]/60"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7aa2ff]" />
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
+                    {study.serviceTitle}
+                  </span>
+                </Link>
+              )}
+
+              <h1
+                className="font-extrabold mb-5 leading-[1.05] tracking-[-0.015em] text-white"
+                style={{ fontSize: "clamp(2rem, 1.4rem + 2.05vw, 3.25rem)" }}
               >
-                {study.serviceTitle}
-              </Link>
-            )}
-            <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-4 leading-tight">
-              {study.title}
-            </h1>
-            <p className="text-lg text-text-muted font-light">
-              Client:{" "}
-              <span className="text-primary font-semibold">{study.client}</span>
-            </p>
+                {study.title}
+              </h1>
+
+              <p className="text-base md:text-[17px] text-white/65 leading-relaxed font-light mb-8">
+                Client:{" "}
+                <span className="text-white font-semibold">{study.client}</span>
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/contact"
+                  className="group rv-btn-primary inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white"
+                >
+                  <span className="rv-btn-sheen" aria-hidden />
+                  <span className="relative">Start a Similar Project</span>
+                  <ArrowRight className="relative w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5" />
+                </Link>
+
+                <Link
+                  href="/case-studies"
+                  className="group rv-btn-ghost inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-md hover:bg-white/[0.09] hover:border-white/30"
+                >
+                  All Case Studies
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
+            </div>
           </FadeIn>
 
-          {study.image && (
-            <ScaleIn>
-              <div className="relative aspect-[4/3] rounded-card overflow-hidden border border-border shadow-xl">
-                <Image
-                  src={urlFor(study.image).width(1000).height(750).url()}
-                  alt={study.title}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            </ScaleIn>
-          )}
+          {/* RIGHT — image */}
+          <div>
+            {study.image ? (
+              <ScaleIn>
+                <div
+                  className="group relative aspect-[5/4] lg:aspect-[5/4] xl:aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 transition-[transform,border-color,box-shadow] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] hover:-translate-y-1 hover:border-white/20"
+                  style={{
+                    boxShadow:
+                      "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
+                  }}
+                >
+                  <Image
+                    src={urlFor(study.image).width(1000).height(800).url()}
+                    alt={study.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover will-change-transform transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"
+                  />
+                </div>
+              </ScaleIn>
+            ) : (
+              <div className="aspect-[5/4] rounded-2xl border border-white/10 bg-white/[0.03]" />
+            )}
+          </div>
         </div>
-      </Section>
+      </DarkSection>
 
       {/* PROBLEM */}
       {study.problem && (
@@ -218,7 +270,7 @@ export default async function CaseStudyDetail({
                   {study.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-3 py-1.5 bg-white border border-border text-text-muted text-[11px] font-bold rounded-theme transition-all duration-300 hover:bg-accent hover:text-white hover:border-accent"
+                      className="px-3 py-1.5 bg-white border border-border text-text-muted text-[11px] font-bold rounded-theme transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-0.5 hover:bg-accent hover:text-white hover:border-accent hover:shadow-[0_8px_18px_-8px_rgba(59,130,246,0.55)]"
                     >
                       {t}
                     </span>
@@ -242,7 +294,7 @@ export default async function CaseStudyDetail({
                 </span>
               </div>
               <p className="text-2xl md:text-4xl font-extrabold leading-tight">
-                “{study.result}”
+                &ldquo;{study.result}&rdquo;
               </p>
             </div>
           </FadeIn>
@@ -251,7 +303,7 @@ export default async function CaseStudyDetail({
 
       {/* DETAILS (portable text) */}
       {study.details?.length ? (
-        <Section className="border-b border-border">
+        <Section className="bg-surface border-b border-border">
           <FadeIn>
             <div className="max-w-3xl mx-auto">
               <span className="text-accent text-xs font-bold uppercase tracking-widest block mb-3">
@@ -269,35 +321,44 @@ export default async function CaseStudyDetail({
         </Section>
       ) : null}
 
-      {/* CTA */}
-      <Section className="bg-surface pb-32">
-        <FadeIn>
-          <div className="relative isolate overflow-hidden bg-[#06092a] text-white text-center p-12 md:p-20 rounded-card shadow-2xl">
-            <SectionBackground />
-
-            <div className="relative">
-              <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
-                Have a similar challenge?
-              </h2>
-              <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto font-light">
-                Let&apos;s talk about your goals and build something that delivers
-                real, measurable results.
-              </p>
-              <Link
-                href="/contact"
-                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-10 py-4 text-lg font-bold text-white shadow-[0_12px_36px_-12px_rgba(59,130,246,0.7)] transition-all duration-300 hover:shadow-[0_22px_50px_-12px_rgba(59,130,246,0.85)]"
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                />
-                <span className="relative">Start a Conversation</span>
-                <ArrowRight className="relative w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </Link>
+      {/* CTA — dark premium ending block matching ServiceCTA */}
+      <section className="bg-surface">
+        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-20 md:py-28">
+          <FadeIn>
+            <div className="relative isolate overflow-hidden bg-[#06092a] text-white p-10 md:p-16 lg:p-20 rounded-card shadow-2xl">
+              <HeroBackground />
+              <div className="relative max-w-3xl">
+                <span className="text-blue-400 text-[11px] font-bold uppercase tracking-[0.2em] mb-4 block">
+                  Let&apos;s Build Together
+                </span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.05] tracking-tight mb-5">
+                  Have a similar challenge?
+                </h2>
+                <p className="text-white/70 text-base md:text-lg leading-relaxed mb-9 max-w-2xl">
+                  Let&apos;s talk about your goals and build something that delivers
+                  real, measurable results.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <Link
+                    href="/contact"
+                    className="group rv-btn-primary inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-8 py-3.5 text-[15px] font-semibold text-white"
+                  >
+                    <span className="rv-btn-sheen" aria-hidden />
+                    <span className="relative">Start a Conversation</span>
+                    <ArrowRight className="relative w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5" />
+                  </Link>
+                  <Link
+                    href="/case-studies"
+                    className="rv-btn-ghost inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 px-8 py-3.5 rounded-theme font-semibold text-[15px] hover:bg-white/[0.18] hover:border-white/30"
+                  >
+                    Explore Our Work
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </FadeIn>
-      </Section>
+          </FadeIn>
+        </div>
+      </section>
     </div>
   );
 }

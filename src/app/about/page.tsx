@@ -75,7 +75,7 @@ export default async function About() {
 
               <ScaleIn>
                 <div
-                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10"
+                  className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 transition-[transform,border-color,box-shadow] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] hover:-translate-y-1 hover:border-white/20"
                   style={{
                     boxShadow:
                       "0 30px 60px -25px rgba(0,0,0,0.55), 0 18px 40px -20px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
@@ -87,10 +87,10 @@ export default async function About() {
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover will-change-transform transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
                   />
                   {/* Subtle navy gradient overlay to fuse the image into the hero atmosphere */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#06092a]/55 via-[#06092a]/10 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-90" />
                   {/* Inner hairline highlight */}
                   <div
                     aria-hidden
@@ -101,7 +101,7 @@ export default async function About() {
 
               {/* FLOATING STAT — reuses the homepage hero stat card */}
               <FadeIn delay={0.2}>
-                <div className="absolute -bottom-8 -left-8 hidden md:block w-[240px] transition-transform duration-300 hover:-translate-y-1">
+                <div className="absolute -bottom-8 -left-8 hidden md:block w-[240px] transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-1.5">
                   <StatCard
                     value={data.statsNumber}
                     label={data.statsLabel}
@@ -124,16 +124,16 @@ export default async function About() {
 
       {/* VALUES */}
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {data.values?.map((item: any, i: number) => {
             const Icon = iconMap[i];
 
             return (
-              <ScaleIn key={i} delay={i * 0.1}>
+              <ScaleIn key={i} delay={i * 0.1} className="h-full">
                 <HeroBackgroundCard>
                   <div className="p-8">
-                    <div className="w-12 h-12 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-accent group-hover:border-accent">
-                      <Icon className="w-6 h-6 text-[#7aa2ff] transition-colors duration-300 group-hover:text-white" />
+                    <div className="w-12 h-12 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center mb-6 transition-[background-color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:bg-accent group-hover:border-accent group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_-10px_rgba(59,130,246,0.7)]">
+                      <Icon className="w-6 h-6 text-[#7aa2ff] transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:text-white" />
                     </div>
 
                     <h3 className="text-xl font-bold text-white mb-4">
@@ -167,9 +167,9 @@ export default async function About() {
 
               <a
                 href={`mailto:${data.email}`}
-                className="flex flex-col sm:flex-row items-center justify-center gap-3 text-lg sm:text-2xl md:text-4xl font-bold text-white hover:text-accent transition-colors text-center break-words max-w-full px-4"
+                className="group flex flex-col sm:flex-row items-center justify-center gap-3 text-lg sm:text-2xl md:text-4xl font-bold text-white text-center break-words max-w-full px-4 transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#06092a] rounded-md"
               >
-                <Mail className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex-shrink-0" />
+                <Mail className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex-shrink-0 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:-translate-y-0.5" />
 
                 <span className="break-all">
                   {data.email}

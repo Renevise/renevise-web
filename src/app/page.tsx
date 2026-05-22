@@ -4,7 +4,6 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 
 export const revalidate = 60;
-import React from 'react';
 import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import ServicesGrid from "@/components/ServicesGrid";
@@ -20,10 +19,10 @@ import Link from "next/link";
 import ProcessSectionWrapper from "@/components/ProcessSectionWrapper";
 import FadeIn from "@/components/animations/FadeIn";
 import ScaleIn from "@/components/animations/ScaleIn";
-import HoverCard from "@/components/animations/HoverCard";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { StatsBar } from "@/components/hero/StatsBar";
 import { SectionBackground } from "@/components/SectionBackground";
+import { Quote } from "lucide-react";
 
 // QUERIES
 const homeQuery = groq`*[_type == "home"][0]{
@@ -130,6 +129,7 @@ export default async function Home() {
       {/* CASE STUDIES */}
       <Section>
         <SectionTitle
+          label="Case Studies"
           title="Measurable Impact"
           subtitle="Explore how we transform businesses."
         />
@@ -139,84 +139,113 @@ export default async function Home() {
               Case studies coming soon.
             </p>
           </FadeIn>
-        ) : <div className="grid md:grid-cols-2 gap-10">
-          {caseStudies.map((c: any, idx: number) => (
-            <ScaleIn key={c._id} delay={idx * 0.1}>
-              <div className="group overflow-hidden flex flex-col">
-                <div className="relative h-80 rounded-card overflow-hidden mb-6 border border-border">
-                  <Image
-                    src={urlFor(c.image).url()}
-                    alt={c.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h4 className="text-xs text-text-muted uppercase">{c.client}</h4>
-                <h3 className="text-xl font-bold text-primary mb-2">{c.title}</h3>
-                <p className="text-text-muted italic">&ldquo;{c.result}&rdquo;</p>
-              </div>
-            </ScaleIn>
-          ))}
-        </div>};
-
-        {/* <FadeIn>
-          <div className="flex justify-center mt-12">
-            <Link
-              href="/case-studies"
-              className="group inline-flex items-center gap-2 px-8 py-3 rounded-theme border border-accent text-accent font-bold transition-all duration-300 hover:bg-accent hover:text-white"
-            >
-              Show More
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </FadeIn> */}
-      </Section>
-
-      <Section className="bg-surface">
-        <SectionTitle
-          title="Client Trust"
-          subtitle="Reliable solutions for decision makers."
-        />
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {testimonials.map((t: any) => (
-            <ScaleIn key={t._id}>
-              <HoverCard className="bg-white p-10 rounded-card border border-border">
-                <p className="text-lg text-text-muted mb-8 italic">
-                  &ldquo;{t.content}&rdquo;
-                </p>
-
-                <div className="flex items-center gap-4">
-                  {t.image ? (
-                    <Image
-                      src={urlFor(t.image).url()}
-                      alt={t.name}
-                      width={48}
-                      height={48}
-                      className="rounded-full border object-cover"
+        ) : (
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+            {caseStudies.map((c: any, idx: number) => (
+              <ScaleIn key={c._id} delay={idx * 0.1} className="h-full">
+                <div className="group rv-card relative isolate flex h-full flex-col overflow-hidden rounded-card border border-border bg-white">
+                  <span className="rv-card-glow" aria-hidden />
+                  <div className="relative aspect-[4/3] overflow-hidden bg-surface">
+                    {c.image && (
+                      <Image
+                        src={urlFor(c.image).url()}
+                        alt={c.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover will-change-transform transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
+                      />
+                    )}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/55 via-primary/10 to-transparent opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
                     />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full border bg-blue-50 flex items-center justify-center text-accent font-bold text-sm shrink-0">
-                      {t.name?.[0]}
-                    </div>
-                  )}
-
-                  <div>
-                    <div className="font-bold text-primary">{t.name}</div>
-                    <div className="text-text-muted text-sm">
-                      {t.role}, {t.company}
-                    </div>
+                  </div>
+                  <div className="flex flex-1 flex-col p-7 md:p-8">
+                    {c.client && (
+                      <span className="text-accent text-[10px] font-bold uppercase tracking-widest mb-3 block">
+                        {c.client}
+                      </span>
+                    )}
+                    <h3 className="text-xl md:text-2xl font-bold text-primary mb-3 leading-snug transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-accent">
+                      {c.title}
+                    </h3>
+                    {c.result && (
+                      <p className="text-text-muted italic leading-relaxed mt-auto">
+                        &ldquo;{c.result}&rdquo;
+                      </p>
+                    )}
                   </div>
                 </div>
+              </ScaleIn>
+            ))}
+          </div>
+        )}
+      </Section>
 
-              </HoverCard>
-            </ScaleIn>
+      {/* TESTIMONIALS */}
+      <Section className="bg-surface">
+        <SectionTitle
+          label="Client Trust"
+          title="Trusted by ambitious teams"
+          subtitle="Reliable solutions for decision makers who need outcomes, not buzzwords."
+        />
 
-          ))}
-        </div>
-      </Section >
+        {testimonials.length > 0 && (
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
+            {testimonials.map((t: any, idx: number) => (
+              <ScaleIn key={t._id} delay={idx * 0.08} className="h-full">
+                <figure className="group rv-card relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-white p-8 md:p-10">
+                  <span className="rv-card-glow" aria-hidden />
+                  <Quote
+                    aria-hidden
+                    className="absolute right-7 top-7 w-9 h-9 text-accent/15 transition-[color,transform] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:text-accent/30 group-hover:rotate-[-6deg]"
+                    strokeWidth={1.5}
+                  />
+
+                  <div
+                    aria-hidden
+                    className="mb-6 h-[2px] w-10 rounded-full bg-gradient-to-r from-accent to-accent/0 transition-[width] duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:w-16"
+                  />
+
+                  <blockquote className="relative flex-1">
+                    <p className="text-[17px] md:text-[18px] text-primary/85 leading-relaxed font-normal">
+                      &ldquo;{t.content}&rdquo;
+                    </p>
+                  </blockquote>
+
+                  <figcaption className="mt-8 flex items-center gap-4 pt-6 border-t border-border/70">
+                    {t.image ? (
+                      <Image
+                        src={urlFor(t.image).url()}
+                        alt={t.name}
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 rounded-full border border-border object-cover shadow-[0_4px_12px_-4px_rgba(15,23,42,0.18)]"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full border border-border bg-gradient-to-br from-white to-[#eef3ff] flex items-center justify-center text-accent font-bold text-sm shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_12px_-4px_rgba(59,130,246,0.2)]">
+                        {t.name?.[0]}
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <div className="font-semibold text-primary leading-tight">
+                        {t.name}
+                      </div>
+                      <div className="text-text-muted text-sm leading-tight mt-1">
+                        {t.role}
+                        {t.role && t.company ? " · " : ""}
+                        <span className="text-primary/70 font-medium">
+                          {t.company}
+                        </span>
+                      </div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </ScaleIn>
+            ))}
+          </div>
+        )}
+      </Section>
 
       {/* FINAL CTA */}
       <Section className="bg-surface pb-32">
@@ -234,12 +263,9 @@ export default async function Home() {
 
             <Link
               href="/contact"
-              className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-8 py-3 font-bold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
+              className="group rv-btn-primary inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-8 py-3 font-bold text-white"
             >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-              />
+              <span className="rv-btn-sheen" aria-hidden />
               <span className="relative">{data?.primaryCTA}</span>
             </Link>
           </div>

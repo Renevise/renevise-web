@@ -380,8 +380,10 @@ export default function ServicesGrid({ services }: { services: Service[] }) {
             onMouseEnter={() => setActiveIndex(idx)}
             onFocus={() => setActiveIndex(idx)}
             aria-label={service.title}
-            className={`group relative min-h-[280px] lg:min-h-0 overflow-hidden rounded-card bg-[#eef1f9] border border-border transition-[flex] duration-500 ease-out flex-1 ${
-              isActive ? "lg:flex-[2.4]" : "lg:flex-1"
+            className={`group relative min-h-[280px] lg:min-h-0 overflow-hidden rounded-card bg-[#eef1f9] border border-border transition-[flex,border-color,box-shadow] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 ${
+              isActive
+                ? "lg:flex-[2.4] lg:border-primary/20 lg:shadow-[0_24px_50px_-22px_rgba(18,25,69,0.35)]"
+                : "lg:flex-1"
             }`}
           >
             {imageUrl && (
@@ -390,20 +392,20 @@ export default function ServicesGrid({ services }: { services: Service[] }) {
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 66vw"
-                className={`object-cover transition-opacity duration-500 ${
+                className={`object-cover transition-opacity duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   isActive ? "lg:opacity-100 opacity-0" : "opacity-0"
                 }`}
               />
             )}
 
             <div
-              className={`absolute inset-0 transition-opacity duration-500 ${
+              className={`absolute inset-0 transition-opacity duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 isActive ? "lg:opacity-100 opacity-0" : "opacity-0"
               } bg-gradient-to-b from-primary/70 via-primary/85 to-primary/95`}
             />
 
             <div
-              className={`pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl transition-opacity duration-500 ${
+              className={`pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl transition-opacity duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 isActive ? "lg:opacity-60 opacity-0" : "opacity-0"
               } bg-accent/20`}
             />
@@ -411,19 +413,21 @@ export default function ServicesGrid({ services }: { services: Service[] }) {
             <div className="relative h-full flex flex-col p-8 md:p-10">
               <div className="flex items-start justify-between">
                 <div
-                  className={`w-10 h-10 rounded-theme flex items-center justify-center transition-colors duration-500 ${
-                    isActive ? "lg:bg-white/10 bg-white" : "bg-white"
+                  className={`w-10 h-10 rounded-theme flex items-center justify-center transition-[background-color,box-shadow] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isActive
+                      ? "lg:bg-white/10 lg:shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] bg-white"
+                      : "bg-white"
                   }`}
                 >
                   <Icon
-                    className={`w-5 h-5 transition-colors duration-500 ${
+                    className={`w-5 h-5 transition-colors duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       isActive ? "lg:text-white text-accent" : "text-accent"
                     }`}
                     strokeWidth={1.75}
                   />
                 </div>
                 <span
-                  className={`text-xs font-semibold tracking-[0.2em] transition-colors duration-500 ${
+                  className={`text-xs font-semibold tracking-[0.2em] transition-colors duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     isActive
                       ? "lg:text-white/60 text-text-muted"
                       : "text-text-muted"
@@ -442,7 +446,7 @@ export default function ServicesGrid({ services }: { services: Service[] }) {
 
               <div>
                 <h3
-                  className={`font-bold transition-all duration-500 mb-2 ${
+                  className={`font-bold transition-[color,font-size] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] mb-2 ${
                     isActive
                       ? "lg:text-white lg:text-2xl text-primary text-xl"
                       : "text-primary text-xl"
@@ -451,7 +455,7 @@ export default function ServicesGrid({ services }: { services: Service[] }) {
                   {service.title}
                 </h3>
                 <p
-                  className={`text-sm transition-all duration-500 lg:max-w-md ${
+                  className={`text-sm transition-[color,opacity,transform] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:max-w-md ${
                     isActive
                       ? "lg:text-white/80 lg:opacity-100 lg:translate-y-0 text-text-muted opacity-100 translate-y-0"
                       : "text-text-muted lg:opacity-0 lg:translate-y-2 opacity-100 translate-y-0"

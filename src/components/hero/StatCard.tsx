@@ -38,7 +38,7 @@ export function StatCard({
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] p-4 backdrop-blur-2xl transition-[transform,box-shadow,border-color] duration-300 hover:border-white/[0.14] sm:p-5 ${className ?? ""}`}
+      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] p-4 backdrop-blur-2xl transition-[transform,box-shadow,border-color] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] will-change-transform hover:-translate-y-0.5 hover:border-white/[0.18] hover:shadow-[0_34px_70px_-25px_rgba(0,0,0,0.6),0_22px_46px_-18px_rgba(59,130,246,0.42),inset_0_1px_0_rgba(255,255,255,0.10)] sm:p-5 ${className ?? ""}`}
       style={{
         backgroundImage:
           "linear-gradient(140deg, rgba(24,33,96,0.92) 0%, rgba(15,21,56,0.94) 50%, rgba(8,12,40,0.96) 100%)",

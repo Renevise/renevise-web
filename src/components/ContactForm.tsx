@@ -85,7 +85,7 @@ export default function ContactForm({ services }: { services: string[] }) {
 
             <button
               onClick={() => setSubmitted(false)}
-              className="text-[#7aa2ff] font-bold hover:underline"
+              className="rv-link-underline text-[#7aa2ff] font-bold transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7aa2ff]/60 rounded-sm"
             >
               Send another message
             </button>
@@ -119,7 +119,7 @@ export default function ContactForm({ services }: { services: string[] }) {
                   name="name"
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 focus:outline-none focus:border-accent/60 focus:bg-white/[0.1] transition-all text-white placeholder-white/40 text-sm backdrop-blur-sm"
+                  className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 text-white placeholder-white/40 text-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:border-white/25 focus:outline-none focus:border-accent/70 focus:bg-white/[0.1] focus:shadow-[0_0_0_4px_rgba(122,162,255,0.18)]"
                 />
               </div>
 
@@ -131,7 +131,7 @@ export default function ContactForm({ services }: { services: string[] }) {
                   name="email"
                   type="email"
                   placeholder="john@company.com"
-                  className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 focus:outline-none focus:border-accent/60 focus:bg-white/[0.1] transition-all text-white placeholder-white/40 text-sm backdrop-blur-sm"
+                  className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 text-white placeholder-white/40 text-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:border-white/25 focus:outline-none focus:border-accent/70 focus:bg-white/[0.1] focus:shadow-[0_0_0_4px_rgba(122,162,255,0.18)]"
                 />
               </div>
 
@@ -143,7 +143,7 @@ export default function ContactForm({ services }: { services: string[] }) {
               </label>
               <select
                 name="service"
-                className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 focus:outline-none focus:border-accent/60 focus:bg-white/[0.1] transition-all text-white text-sm backdrop-blur-sm"
+                className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 text-white text-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:border-white/25 focus:outline-none focus:border-accent/70 focus:bg-white/[0.1] focus:shadow-[0_0_0_4px_rgba(122,162,255,0.18)]"
               >
                 {services?.map((s) => (
                   <option key={s} className="bg-[#06092a] text-white">
@@ -161,21 +161,18 @@ export default function ContactForm({ services }: { services: string[] }) {
                 name="message"
                 rows={4}
                 placeholder="Describe your technical requirements..."
-                className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 focus:outline-none focus:border-accent/60 focus:bg-white/[0.1] transition-all text-white placeholder-white/40 text-sm backdrop-blur-sm"
+                className="w-full px-5 py-3 rounded-theme bg-white/[0.06] border border-white/15 text-white placeholder-white/40 text-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:border-white/25 focus:outline-none focus:border-accent/70 focus:bg-white/[0.1] focus:shadow-[0_0_0_4px_rgba(122,162,255,0.18)]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="group/btn relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] py-4 font-bold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)] flex items-center justify-center gap-2 mt-4 disabled:opacity-60 disabled:hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)]"
+              className="group rv-btn-primary mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] py-4 font-bold text-white disabled:opacity-60 disabled:hover:translate-y-0"
             >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover/btn:translate-x-full"
-              />
+              <span className="rv-btn-sheen" aria-hidden />
               <span className="relative">{loading ? "Sending..." : "Send Project Inquiry"}</span>
-              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5" />
             </button>
 
             <p className="text-center text-white/50 text-[10px] mt-4">

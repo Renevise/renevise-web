@@ -4,10 +4,11 @@ import { urlFor } from "@/lib/sanityImage";
 import groq from "groq";
 
 export const revalidate = 60;
+
 import Image from "next/image";
 import Link from "next/link";
 import { Section } from "@/components/Section";
-import { SectionBackground } from "@/components/SectionBackground";
+import { DarkSection } from "@/components/DarkSection";
 import { HeroBackground } from "@/components/hero/HeroBackground";
 import { ArrowRight } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
@@ -16,7 +17,11 @@ import JsonLd from "@/components/JsonLd";
 import { buildMetadata, siteConfig } from "@/lib/seo";
 import type { CaseStudy } from "@/types";
 
-const query = groq`*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc){
+const query = groq`*[
+  _type == "caseStudy"
+  && defined(slug.current)
+  && !(_id in path("drafts.**"))
+] | order(_createdAt desc){
   _id,
   title,
   client,
@@ -33,7 +38,14 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function CaseStudies() {
-  const caseStudies = await sanityFetch<CaseStudy[]>(query, {}, { tags: ["caseStudy"] });
+  const raw = await sanityFetch<CaseStudy[]>(query, {}, { tags: ["caseStudy"] });
+  // Sanity's `perspective: "published"` already hides drafts, but defensively
+  // strip anything missing the required public fields so we never render a
+  // broken card or a link to `/case-studies/undefined`.
+  const caseStudies = (raw ?? []).filter(
+    (s): s is CaseStudy & { slug: string } =>
+      Boolean(s && s.slug && s.title)
+  );
 
   const caseStudySchema = {
     "@context": "https://schema.org",
@@ -56,25 +68,35 @@ export default async function CaseStudies() {
   };
 
   return (
-    <div className="pt-[72px]">
+    <div>
       <JsonLd data={caseStudySchema} />
 
       {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-[#06092a] text-white py-24 px-6 md:py-32">
-        <SectionBackground />
-        <div className="relative max-w-7xl 2xl:max-w-[1400px] mx-auto">
-          <FadeIn>
-            <div className="text-center max-w-3xl mx-auto">
-              <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
-                Our Impact
-              </h1>
-              <p className="text-lg text-white/70">
-                Real problems. Structured solutions. Measured results.
-              </p>
+      <DarkSection
+        className="border-b border-white/10"
+        innerClassName="pt-[120px] md:pt-[140px] pb-20 md:pb-24"
+        withBottomAnchor
+      >
+        <FadeIn>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 mb-6 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#7aa2ff]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
+                Proven Results
+              </span>
             </div>
-          </FadeIn>
-        </div>
-      </section>
+            <h1
+              className="font-extrabold mb-5 leading-[1.05] tracking-[-0.015em] text-white"
+              style={{ fontSize: "clamp(2.25rem, 1.4rem + 2.6vw, 3.75rem)" }}
+            >
+              Our Impact
+            </h1>
+            <p className="text-base md:text-[17px] text-white/65 leading-relaxed font-light max-w-2xl mx-auto">
+              Real problems. Structured solutions. Measured results.
+            </p>
+          </div>
+        </FadeIn>
+      </DarkSection>
 
       {/* GRID */}
       <Section>
@@ -85,13 +107,14 @@ export default async function CaseStudies() {
             </p>
           </FadeIn>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {caseStudies.map((study, idx) => (
-              <FadeIn key={study._id} delay={idx * 0.08}>
+              <FadeIn key={study._id} delay={idx * 0.08} className="h-full">
                 <Link
                   href={`/case-studies/${study.slug}`}
-                  className="group block rounded-card border border-border overflow-hidden bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-accent/40"
+                  className="group rv-card relative isolate flex h-full flex-col overflow-hidden rounded-card border border-border bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2"
                 >
+                  <span className="rv-card-glow" aria-hidden />
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface">
                     {study.image && (
                       <Image
@@ -99,18 +122,23 @@ export default async function CaseStudies() {
                         alt={study.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                        className="object-cover will-change-transform transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]"
                       />
                     )}
+                    {/* Gradient overlay that fades in for content readability + premium depth */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/55 via-primary/10 to-transparent opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
+                    />
                   </div>
 
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     {study.serviceTitle && (
-                      <span className="text-accent text-[10px] font-bold uppercase tracking-widest block mb-3">
+                      <span className="text-accent text-[10px] font-bold uppercase tracking-widest block mb-3 transition-opacity duration-300 group-hover:opacity-90">
                         {study.serviceTitle}
                       </span>
                     )}
-                    <h2 className="text-lg md:text-xl font-bold text-primary leading-snug transition-colors duration-300 group-hover:text-accent">
+                    <h2 className="text-lg md:text-xl font-bold text-primary leading-snug transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-accent">
                       {study.title}
                     </h2>
                   </div>
@@ -122,34 +150,34 @@ export default async function CaseStudies() {
       </Section>
 
       {/* FINAL CTA */}
-      <Section className="text-center pt-0 pb-32">
-        <ScaleIn>
-          <div className="relative isolate max-w-xl mx-auto p-12 rounded-card border border-white/10 bg-[#06092a] shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
-            style={{
-              boxShadow:
-                "0 18px 40px -20px rgba(0,0,0,0.55), 0 10px 30px -18px rgba(59,130,246,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
-            }}>
-            <HeroBackground />
-            <div className="relative z-10">
-              <h3 className="text-xl font-bold text-white mb-4">
-                Ready to be our next success story?
-              </h3>
-
-              <Link
-                href="/contact"
-                className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.65)] transition-all duration-300 hover:shadow-[0_18px_40px_-10px_rgba(59,130,246,0.85)]"
-              >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                />
-                <span className="relative">Get in touch to discuss your project</span>
-                <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </Link>
+      <section className="bg-surface">
+        <div className="max-w-7xl 2xl:max-w-[1400px] mx-auto px-6 py-20 md:py-28">
+          <ScaleIn>
+            <div className="relative isolate overflow-hidden bg-[#06092a] text-white p-10 md:p-16 lg:p-20 rounded-card shadow-2xl">
+              <HeroBackground />
+              <div className="relative max-w-3xl mx-auto text-center">
+                <span className="text-blue-400 text-[11px] font-bold uppercase tracking-[0.2em] mb-4 block">
+                  Let&apos;s Build Together
+                </span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-[1.05] tracking-tight mb-5">
+                  Ready to be our next success story?
+                </h2>
+                <p className="text-white/70 text-base md:text-lg leading-relaxed mb-9 max-w-xl mx-auto">
+                  Tell us about your goals and we&apos;ll respond with a tailored plan within two business days.
+                </p>
+                <Link
+                  href="/contact"
+                  className="group rv-btn-primary inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#3b82f6] to-[#1e2b7a] px-8 py-3.5 text-[15px] font-semibold text-white"
+                >
+                  <span className="rv-btn-sheen" aria-hidden />
+                  <span className="relative">Start a Conversation</span>
+                  <ArrowRight className="relative w-4 h-4 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:translate-x-0.5" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </ScaleIn>
-      </Section>
+          </ScaleIn>
+        </div>
+      </section>
     </div>
   );
 }
