@@ -65,7 +65,7 @@ export function TechStackSection({ categories }: Props) {
               <HeroBackgroundCard>
                 <div className="p-7">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="w-8 h-8 rounded-theme bg-accent/15 text-[#7aa2ff] text-xs font-bold flex items-center justify-center border border-white/10">
+                    <span className="rv-icon-tile-dark w-8 h-8 rounded-theme text-xs font-bold">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
                     <h3 className="text-base md:text-lg font-bold text-white uppercase tracking-wide">
@@ -76,7 +76,7 @@ export function TechStackSection({ categories }: Props) {
                     {cat.technologies.map((t) => (
                       <span
                         key={t}
-                        className="px-3 py-1.5 bg-white/[0.06] border border-white/15 text-[12px] font-semibold text-white/80 rounded-theme backdrop-blur-sm transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-0.5 hover:bg-accent hover:text-white hover:border-accent hover:shadow-[0_8px_18px_-8px_rgba(59,130,246,0.55)]"
+                        className="rv-pill-dark px-3 py-1.5 text-[12px] font-semibold rounded-theme backdrop-blur-sm"
                       >
                         {t}
                       </span>

@@ -270,7 +270,7 @@ export default async function CaseStudyDetail({
                   {study.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-3 py-1.5 bg-white border border-border text-text-muted text-[11px] font-bold rounded-theme transition-[background-color,color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] hover:-translate-y-0.5 hover:bg-accent hover:text-white hover:border-accent hover:shadow-[0_8px_18px_-8px_rgba(59,130,246,0.55)]"
+                      className="rv-pill-light px-3 py-1.5 text-[11px] font-bold rounded-theme"
                     >
                       {t}
                     </span>

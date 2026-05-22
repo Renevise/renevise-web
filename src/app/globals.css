@@ -183,16 +183,68 @@
     0 10px 24px -10px rgba(122, 162, 255, 0.38);
 }
 
+/* ================================================================
+ * Premium pill — dark surfaces
+ * Tech-tag / chip styling on dark cards. Same refined desaturated
+ * blue hover as the icon tile so chip selections feel like part of
+ * the same family instead of neon "selected" states.
+ * ================================================================ */
+.rv-pill-dark {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  transition-property: transform, color, background-color, border-color, box-shadow;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+}
+
+.rv-pill-dark:hover {
+  transform: translate3d(0, -2px, 0);
+  color: #ffffff;
+  background-color: rgba(122, 162, 255, 0.18);
+  border-color: rgba(155, 183, 255, 0.38);
+  box-shadow: 0 8px 18px -8px rgba(122, 162, 255, 0.34);
+}
+
+/* ================================================================
+ * Premium pill — light surfaces
+ * Same motion language on white/surface backgrounds (case-study
+ * tech chips). Hovered pill uses a soft tinted lavender-blue
+ * instead of flat neon accent.
+ * ================================================================ */
+.rv-pill-light {
+  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition-property: transform, color, background-color, border-color, box-shadow;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+}
+
+.rv-pill-light:hover {
+  transform: translate3d(0, -2px, 0);
+  color: var(--color-primary);
+  background-color: #eef3ff;
+  border-color: rgba(122, 162, 255, 0.48);
+  box-shadow: 0 8px 18px -8px rgba(122, 162, 255, 0.36);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rv-icon-tile-dark,
-  .rv-icon-tile-light {
+  .rv-icon-tile-light,
+  .rv-pill-dark,
+  .rv-pill-light {
     transition-duration: var(--rv-duration-fast);
   }
 
   .group:hover .rv-icon-tile-dark,
   .rv-icon-tile-dark:hover,
   .group:hover .rv-icon-tile-light,
-  .rv-icon-tile-light:hover {
+  .rv-icon-tile-light:hover,
+  .rv-pill-dark:hover,
+  .rv-pill-light:hover {
     transform: none;
   }
 }
