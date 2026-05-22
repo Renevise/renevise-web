@@ -208,10 +208,10 @@ function AiSvg() {
 function NodeBadge({ x, y, label }: { x: number; y: number; label: string }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <rect width="60" height="26" rx="13" fill="#0f1638" stroke="#3b82f6" strokeOpacity="0.5" />
+      <rect width="70" height="26" rx="13" fill="#0f1638" stroke="#3b82f6" strokeOpacity="0.5" />
       <circle cx="14" cy="13" r="4" fill="#3b82f6" />
       <text
-        x="24"
+        x="22"
         y="17"
         fontFamily="Inter, sans-serif"
         fontSize="9"

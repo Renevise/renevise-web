@@ -168,8 +168,8 @@ export default async function About() {
               <ScaleIn key={i} delay={i * 0.1} className="h-full">
                 <HeroBackgroundCard>
                   <div className="p-8">
-                    <div className="w-12 h-12 bg-white/10 border border-white/15 rounded-lg flex items-center justify-center mb-6 transition-[background-color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:bg-accent group-hover:border-accent group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_-10px_rgba(59,130,246,0.7)]">
-                      <Icon className="w-6 h-6 text-[#7aa2ff] transition-colors duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:text-white" />
+                    <div className="rv-icon-tile-dark w-12 h-12 rounded-lg mb-6">
+                      <Icon className="w-6 h-6" />
                     </div>
 
                     <h3 className="text-xl font-bold text-white mb-4">

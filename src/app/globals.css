@@ -109,6 +109,95 @@
 }
 
 /* ================================================================
+ * Premium icon tile — dark surfaces
+ * Centralized icon-container styling for cards over the dark
+ * HeroBackground atmosphere. Replaces the previous neon-accent
+ * hover (`group-hover:bg-accent` + harsh #3b82f6 glow) with a
+ * refined, desaturated #7aa2ff/#9bb7ff tone that harmonises with
+ * the deep navy environment instead of fighting it.
+ *
+ * Usage: drop on the icon container <div>. The parent card should
+ * carry the `group` class so hover propagates from card → tile.
+ * Sizing, radius, and the inner <Icon /> classes stay on the
+ * consumer so each surface keeps its layout freedom.
+ * ================================================================ */
+.rv-icon-tile-dark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9bb7ff;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -6px 12px -6px rgba(122, 162, 255, 0.22);
+  transition-property: transform, color, background-color, border-color, box-shadow;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+}
+
+.group:hover .rv-icon-tile-dark,
+.rv-icon-tile-dark:hover {
+  transform: translate3d(0, -2px, 0);
+  color: #ffffff;
+  background-color: rgba(122, 162, 255, 0.14);
+  border-color: rgba(155, 183, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -8px 16px -8px rgba(122, 162, 255, 0.34),
+    0 10px 26px -14px rgba(122, 162, 255, 0.32);
+}
+
+/* ================================================================
+ * Premium icon tile — light surfaces
+ * Same motion language for icon containers on white/surface cards
+ * (e.g. contact methods). Replaces hardcoded neon `#3b82f6` glow
+ * shadows with the same refined #7aa2ff family for site-wide
+ * consistency.
+ * ================================================================ */
+.rv-icon-tile-light {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  background-image: linear-gradient(135deg, #ffffff 0%, #eef3ff 100%);
+  border: 1px solid var(--color-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 14px -6px rgba(122, 162, 255, 0.22);
+  transition-property: transform, color, border-color, box-shadow;
+  transition-duration: var(--rv-duration-base);
+  transition-timing-function: var(--rv-ease-out);
+  will-change: transform;
+}
+
+.group:hover .rv-icon-tile-light,
+.rv-icon-tile-light:hover {
+  transform: translate3d(0, -2px, 0);
+  border-color: rgba(122, 162, 255, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 10px 24px -10px rgba(122, 162, 255, 0.38);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-icon-tile-dark,
+  .rv-icon-tile-light {
+    transition-duration: var(--rv-duration-fast);
+  }
+
+  .group:hover .rv-icon-tile-dark,
+  .rv-icon-tile-dark:hover,
+  .group:hover .rv-icon-tile-light,
+  .rv-icon-tile-light:hover {
+    transform: none;
+  }
+}
+
+/* ================================================================
  * Premium primary CTA (gradient blue button)
  * Smooth lift, deeper glow, animated sheen sweep on hover.
  * Apply on top of existing gradient/padding classes; class adds the

@@ -76,15 +76,15 @@ export function WhyChooseSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch">
           {ITEMS.map((item, idx) => {
             const Icon = item.icon;
-            const isOffset = idx % 2 === 1;
+           
             return (
               <FadeIn key={item.title} delay={Math.min(idx * 0.05, 0.3)} className="h-full">
-                <HeroBackgroundCard className={isOffset ? "lg:translate-y-4" : ""}>
+                <HeroBackgroundCard>
                   <div className="p-7 md:p-8">
                     <div className="absolute top-7 right-7 text-[11px] font-bold text-white/40 tracking-widest">
                       0{idx + 1}
                     </div>
-                    <div className="w-11 h-11 rounded-theme bg-white/10 text-white flex items-center justify-center mb-5 border border-white/15 transition-[background-color,border-color,transform,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:bg-accent group-hover:border-accent group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_-10px_rgba(59,130,246,0.7)]">
+                    <div className="rv-icon-tile-dark w-11 h-11 rounded-theme mb-5">
                       <Icon className="w-5 h-5" />
                     </div>
                     <h3 className="text-lg md:text-xl font-bold text-white mb-3 leading-snug">

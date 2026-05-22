@@ -137,11 +137,11 @@ export default async function Contact() {
                       <div className="relative shrink-0">
                         <span
                           aria-hidden
-                          className="pointer-events-none absolute -inset-2 rounded-2xl bg-accent/15 blur-xl opacity-0 transition-opacity duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:opacity-100"
+                          className="pointer-events-none absolute -inset-2 rounded-2xl bg-[#7aa2ff]/15 blur-xl opacity-0 transition-opacity duration-[var(--rv-duration-slow)] ease-[var(--rv-ease-out)] group-hover:opacity-100"
                         />
-                        <div className="relative w-12 h-12 rounded-xl border border-border bg-gradient-to-br from-white to-[#eef3ff] flex items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_14px_-6px_rgba(59,130,246,0.18)] transition-[transform,border-color,box-shadow] duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:-translate-y-0.5 group-hover:border-accent/40 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_10px_24px_-10px_rgba(59,130,246,0.42)]">
+                        <div className="rv-icon-tile-light relative w-12 h-12 rounded-xl">
                           <Icon
-                            className="w-5 h-5 text-accent transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:scale-110"
+                            className="w-5 h-5 transition-transform duration-[var(--rv-duration-base)] ease-[var(--rv-ease-out)] group-hover:scale-110"
                             strokeWidth={1.85}
                           />
                         </div>
