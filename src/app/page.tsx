@@ -9,9 +9,9 @@ import { buildMetadata } from "@/lib/seo";
 import ServicesGrid from "@/components/ServicesGrid";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Business Technology Consulting",
+  title: "Renevise | Web Development, AI Automation & Digital Solutions",
   description:
-    "Renevise partners with enterprises to deliver high-impact web, mobile, and AI solutions. Transform your technology infrastructure with a firm that measures success by yours.",
+    "Renevise helps businesses grow through custom web development, AI automation, software solutions, and digital transformation services.",
   path: "/",
 });
 import { Section, SectionTitle } from "@/components/Section";
